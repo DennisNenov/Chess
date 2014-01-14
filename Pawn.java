@@ -1,3 +1,8 @@
+// Nicholas Romanoff & Dennis Nenov
+// AP CS1 Final Project
+
+// Pawn subclass for use with the Chess.java driver file.
+
 import java.util.ArrayList;
 
 public class Pawn extends Piece

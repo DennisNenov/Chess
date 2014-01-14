@@ -1,4 +1,8 @@
-<<<<<<< HEAD
+// Nicholas Romanoff & Dennis Nenov
+// AP CS1 Final Project
+
+// Piece superclass for use with the Chess.java driver file.
+
 import java.util.ArrayList;
 
 //Movement Codes
