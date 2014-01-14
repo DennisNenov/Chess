@@ -8,4 +8,12 @@ public class Knight extends Piece
 		scopeList = new ArrayList<Integer>();
 		scopeList.add(4);
 	}
+	public String toString() {
+		if (isColorWhite) {
+			return "H";
+		}
+		else {
+			return "h";
+		}
+	}
 }

@@ -9,4 +9,12 @@ public class Queen extends Piece
 		scopeList.add(2);
 		scopeList.add(3);
 	}
+	public String toString() {
+		if (isColorWhite) {
+			return "Q";
+		}
+		else {
+			return "q";
+		}
+	}
 }

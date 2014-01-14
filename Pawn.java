@@ -8,4 +8,12 @@ public class Pawn extends Piece
 		scopeList = new ArrayList<Integer>();
 		scopeList.add(1);
 	}
+	public String toString() {
+		if (isColorWhite) {
+			return "P";
+		}
+		else {
+			return "p";
+		}
+	}
 }

@@ -8,4 +8,13 @@ public class Bishop extends Piece
 		scopeList = new ArrayList<Integer>();
 		scopeList.add(3);
 	}
+
+	public String toString() {
+		if (isColorWhite) {
+			return "B";
+		}
+		else {
+			return "b";
+		}
+	}
 }

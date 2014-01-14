@@ -8,4 +8,13 @@ public class King extends Piece
 		scopeList = new ArrayList<Integer>();
 		scopeList.add(5);
 	}
+
+	public String toString() {
+		if (isColorWhite) {
+			return "K";
+		}
+		else {
+			return "k";
+		}
+	}
 }

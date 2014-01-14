@@ -8,4 +8,13 @@ public class Rook extends Piece
 		scopeList = new ArrayList<Integer>();
 		scopeList.add(2);
 	}
+
+	public String toString() {
+		if (isColorWhite) {
+			return "R";
+		}
+		else {
+			return "r";
+		}
+	}
 }
