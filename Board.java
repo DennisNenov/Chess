@@ -55,5 +55,9 @@ public class Board {
 		return _board[row][column];
 	}
 
+	public boolean isPieceWhite(int row, int column) {
+		return _board[row][column].getIsWhite();
+	}
+
 
 }
