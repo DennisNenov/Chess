@@ -5,15 +5,16 @@
 
 import java.util.ArrayList;
 
-public class King extends Piece
-{
-	public King (String color)
-	{
+public class King extends Piece {
+
+	// constructor
+	public King (String color) {
 		super(color);
-		//scopeList = new ArrayList<Integer>();
-		//scopeList.add(5);
+		scopeList = new ArrayList<Integer>();
+		scopeList.add(5);
 	}
 
+	// toString
 	public String toString() {
 		if (_color == "White") {
 			return "K";
