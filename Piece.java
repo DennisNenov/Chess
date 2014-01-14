@@ -5,5 +5,9 @@
 
 public class Piece {
 
+	private String _color;
 
+	public Piece(String color) {
+		_color = color;
+	}
 }
