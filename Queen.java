@@ -5,17 +5,19 @@
 
 import java.util.ArrayList;
 
-public class Queen extends Piece
-{
-	public Queen (boolean isColorWhite)
-	{
-		super(isColorWhite);
-		//scopeList = new ArrayList<Integer>();
-		//scopeList.add(2);
-		//scopeList.add(3);
+public class Queen extends Piece {
+
+	// constructor
+	public Queen (String color) {
+		super(color);
+		scopeList = new ArrayList<Integer>();
+		scopeList.add(2);
+		scopeList.add(3);
 	}
+
+	// toString
 	public String toString() {
-		if (_isWhite) {
+		if (_color == "White") {
 			return "Q";
 		}
 		else {

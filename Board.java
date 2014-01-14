@@ -15,33 +15,33 @@ public class Board {
 		_board = new Piece[8][8];
 
 		// instantiates the back row of black pieces
-		_board[0][0] = new Rook(false);
-		_board[0][1] = new Knight(false);
-		_board[0][2] = new Bishop(false);
-		_board[0][3] = new Queen(false);
-		_board[0][4] = new King(false);
-		_board[0][5] = new Bishop(false);
-		_board[0][6] = new Knight(false);
-		_board[0][7] = new Rook(false);
+		_board[0][0] = new Rook("Black");
+		_board[0][1] = new Knight("Black");
+		_board[0][2] = new Bishop("Black");
+		_board[0][3] = new Queen("Black");
+		_board[0][4] = new King("Black");
+		_board[0][5] = new Bishop("Black");
+		_board[0][6] = new Knight("Black");
+		_board[0][7] = new Rook("Black");
 
 		// instantiates the front row of black pieces
 		for (int x = 0; x < 8; x++) {
-			_board[1][x] = new Pawn(false);
+			_board[1][x] = new Pawn("Black");
 		}
 
 		// instantiates the back row of white pieces
-		_board[7][0] = new Rook(true);
-		_board[7][1] = new Knight(true);
-		_board[7][2] = new Bishop(true);
-		_board[7][3] = new Queen(true);
-		_board[7][4] = new King(true);
-		_board[7][5] = new Bishop(true);
-		_board[7][6] = new Knight(true);
-		_board[7][7] = new Rook(true);
+		_board[7][0] = new Rook("White");
+		_board[7][1] = new Knight("White");
+		_board[7][2] = new Bishop("White");;
+		_board[7][3] = new Queen("White");
+		_board[7][4] = new King("White");;
+		_board[7][5] = new Bishop("White");
+		_board[7][6] = new Knight("White");
+		_board[7][7] = new Rook("White");
 
 		// instantiates the front row of white pieces
 		for (int x = 0; x < 8; x++) {
-			_board[6][x] = new Pawn(true);
+			_board[6][x] = new Pawn("White");
 		}
 	}
 
@@ -55,8 +55,8 @@ public class Board {
 		return _board[row][column];
 	}
 
-	public boolean isPieceWhite(int row, int column) {
-		return _board[row][column].getIsWhite();
+	public String getPieceColor(int row, int column) {
+		return _board[row][column].getColor();
 	}
 
 	public String toString() { 

@@ -5,17 +5,18 @@
 
 import java.util.ArrayList;
 
-public class Bishop extends Piece
-{
-	public Bishop (boolean isColorWhite)
-	{
-		super(isColorWhite);
-		//scopeList = new ArrayList<Integer>();
-		//scopeList.add(3);
+public class Bishop extends Piece {
+
+	// constructor
+	public Bishop (String color) {
+		super(color);
+		scopeList = new ArrayList<Integer>();
+		scopeList.add(3);
 	}
 
+	// toString
 	public String toString() {
-		if (_isWhite) {
+		if (_color == "White") {
 			return "B";
 		}
 		else {

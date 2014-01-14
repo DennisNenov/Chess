@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class King extends Piece
 {
-	public King (boolean isColorWhite)
+	public King (String color)
 	{
-		super(isColorWhite);
+		super(color);
 		//scopeList = new ArrayList<Integer>();
 		//scopeList.add(5);
 	}
 
 	public String toString() {
-		if (_isWhite) {
+		if (_color == "White") {
 			return "K";
 		}
 		else {

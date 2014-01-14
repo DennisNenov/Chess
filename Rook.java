@@ -5,17 +5,18 @@
 
 import java.util.ArrayList;
 
-public class Rook extends Piece
-{
-	public Rook (boolean isColorWhite)
-	{
-		super(isColorWhite);
-		//scopeList = new ArrayList<Integer>();
-		//scopeList.add(2);
+public class Rook extends Piece {
+
+	// constructor
+	public Rook (String color) {
+		super(color);
+		scopeList = new ArrayList<Integer>();
+		scopeList.add(2);
 	}
 
+	// toString
 	public String toString() {
-		if (_isWhite) {
+		if (_color == "White") {
 			return "R";
 		}
 		else {

@@ -5,16 +5,18 @@
 
 import java.util.ArrayList;
 
-public class Knight extends Piece
-{
-	public Knight (boolean isColorWhite)
-	{
-		super(isColorWhite);
-		//scopeList = new ArrayList<Integer>();
-		//scopeList.add(4);
+public class Knight extends Piece {
+
+	// constructor
+	public Knight (String color) {
+		super(color);
+		scopeList = new ArrayList<Integer>();
+		scopeList.add(4);
 	}
+
+	// toString
 	public String toString() {
-		if (_isWhite) {
+		if (_color == "White") {
 			return "H";
 		}
 		else {

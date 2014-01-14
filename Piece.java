@@ -14,23 +14,21 @@ import java.util.ArrayList;
 
 public abstract class Piece
 {
-	protected boolean _isWhite;
-	//protected ArrayList<Integer> _scopeList;
-	//protected Board _scopePossible;
+	protected String _color;
+	protected ArrayList<Integer> _scopeList;
+	protected Board _scopePossible;
 
-	public Piece (boolean isColorWhite)
-	{
-		_isWhite = isColorWhite;
+	public Piece (String color) {
+		_color = color;
 	}
 
-	public boolean getIsWhite() {
-		return _isWhite;
+	public String getColor() {
+		return _color;
 	}
 
-	//public Board generatePossibleScope()
-	//{
-		//return new Board();
-	//}
+	public Board generatePossibleScope() {
+		return new Board();
+	}
 
 }
 
