@@ -12,11 +12,11 @@ import java.util.ArrayList;
 // 4 - knight
 // 5 - king
 
-public abstract class Piece
-{
+public abstract class Piece {
+
 	protected String _color;
 	protected ArrayList<Integer> _scopeList;
-	protected Board _scopePossible;
+	protected String[][] _scopePossible;
 
 	public Piece (String color) {
 		_color = color;
@@ -26,9 +26,12 @@ public abstract class Piece
 		return _color;
 	}
 
-	public Board generatePossibleScope() {
+	public String generatePossibleScope() {
 		return new Board();
 	}
+
+
+
 
 }
 

@@ -59,6 +59,29 @@ public class Board {
 		return _board[row][column].getColor();
 	}
 
+
+	public String[][] scopePossible(int row, int column) {
+		String "color" = getPieceColor(row, column);
+		_scopePossible = new String[8][8];
+		// creation of initial mapping
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				// deterimines if a square is Free
+				if (isEmpty(x, y) == true) {
+					_scopePossible[x][y] == "F";
+				// determines if a square is occupied by an Ally
+				else if (getPieceColor(x, y) == "color") {
+					_scopePossible[x][y] == "A";
+				}
+				// determines if a square is occupied by an Enemy
+				else if (getPieceColor(x, y) != "color") {
+					_scopePossible[x][y] == "E";
+				}
+			}
+		}
+
+
+
 	public String toString() { 
 		String retStr = "";
        		for (int x = 0; x < 8; x++) {
