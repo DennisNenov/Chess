@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 //Movement Codes
@@ -24,3 +25,18 @@ public abstract class Piece
 	}
 
 }
+=======
+// Nicholas Romanoff & Dennis Nenov
+// AP CS1 Final Project
+
+// Piece superclass for use with the Chess.java driver file.
+
+public class Piece {
+
+	private String _color;
+
+	public Piece(String color) {
+		_color = color;
+	}
+}
+>>>>>>> 9b89bbbae07235841b98b3064c993208a6ea14b4
