@@ -10,11 +10,11 @@ public class Pawn extends Piece
 	public Pawn (boolean isColorWhite)
 	{
 		super(isColorWhite);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(1);
+		//scopeList = new ArrayList<Integer>();
+		//scopeList.add(1);
 	}
 	public String toString() {
-		if (isColorWhite) {
+		if (_isWhite) {
 			return "P";
 		}
 		else {

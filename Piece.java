@@ -15,22 +15,22 @@ import java.util.ArrayList;
 public abstract class Piece
 {
 	protected boolean _isWhite;
-	protected ArrayList<Integer> _scopeList;
-	protected Board _scopePossible;
+	//protected ArrayList<Integer> _scopeList;
+	//protected Board _scopePossible;
 
 	public Piece (boolean isColorWhite)
 	{
-		isWhite = isColorWhite;
+		_isWhite = isColorWhite;
 	}
 
 	public boolean getIsWhite() {
 		return _isWhite;
 	}
 
-	public Board generatePossibleScope()
-	{
-		return new Board();
-	}
+	//public Board generatePossibleScope()
+	//{
+		//return new Board();
+	//}
 
 }
 

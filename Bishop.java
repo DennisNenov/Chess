@@ -10,12 +10,12 @@ public class Bishop extends Piece
 	public Bishop (boolean isColorWhite)
 	{
 		super(isColorWhite);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(3);
+		//scopeList = new ArrayList<Integer>();
+		//scopeList.add(3);
 	}
 
 	public String toString() {
-		if (isColorWhite) {
+		if (_isWhite) {
 			return "B";
 		}
 		else {

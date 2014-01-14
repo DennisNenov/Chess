@@ -59,23 +59,21 @@ public class Board {
 		return _board[row][column].getIsWhite();
 	}
 
-	public String toString {
-		String retStr = "";
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0;
-
 	public String toString() { 
 		String retStr = "";
        		for (int x = 0; x < 8; x++) {
-			String retRow = "";
+			String retRow = "| ";
 			for (int y = 0; y < 8; y++) {
-				if (isEmpty[x][y]) {
+				if (isEmpty(x,y)) {
 					retRow += "  ";
+				}
 				else {
 					retRow += _board[x][y] + " ";
 				}
 			}
-			retStr += "\n" + retRow;
+			retStr += "\n" + retRow + "|";
 		}
+		retStr += "\n";
+		return retStr;
     	}
 }

@@ -10,12 +10,12 @@ public class King extends Piece
 	public King (boolean isColorWhite)
 	{
 		super(isColorWhite);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(5);
+		//scopeList = new ArrayList<Integer>();
+		//scopeList.add(5);
 	}
 
 	public String toString() {
-		if (isColorWhite) {
+		if (_isWhite) {
 			return "K";
 		}
 		else {
