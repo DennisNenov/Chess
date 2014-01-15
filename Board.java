@@ -31,8 +31,12 @@ public class Board {
 			_board[1][x] = new Pawn("Black");
 		}
 
-		// test piece
-		_board[3][3] = new Rook("Black");
+		// test pieces
+		_board[3][4] = new Rook("Black");
+		_board[5][6] = new Bishop("White");
+		_board[4][4] = new Queen("Black");
+		_board[2][2] = new King("White");
+		_board[5][5] = new Pawn("White");
 
 
 		// instantiates the back row of white pieces
@@ -65,14 +69,65 @@ public class Board {
 		return _board[row][column].getColor();
 	}
 
-	public boolean[][] getScope(int row, int column) 
-	{
+	public ArrayList<Integer> specialCache(int row, int column, Piece piece) {
+		ArrayList<Integer> retSpecials = new ArrayList<Integer>();
+		if ((piece instanceof Pawn) == true) {
+			if (piece.getColor() == "Black") {
+				if (row == 1) {
+					retSpecials.add(1);
+					retSpecials.add(2);
+				}
+				else {
+					retSpecials.add(2);
+				}
+				if (getPiece(row + 1, column + 1).getColor() == "White") {
+					retSpecials.add(3);
+				}
+				if (getPiece(row + 1, column - 1).getColor() == "White") {
+					retSpecials.add(4);
+				}
+			}
+			else {
+				if (row == 6) {
+					retSpecials.add(5);
+					retSpecials.add(6);
+				}
+				else {
+					retSpecials.add(6);
+				}
+				if (!(isEmpty(row - 1, column + 1))) {
+					if (getPiece(row - 1, column + 1).getColor() == "Black") {
+						retSpecials.add(7);
+					}
+				}
+				if (!(isEmpty(row - 1, column - 1))) {
+					if (getPiece(row - 1, column - 1).getColor() == "Black") {
+						retSpecials.add(8);
+					}
+				}
+			}
+		}
+		return retSpecials;
+	}
+
+
+	public boolean[][] getScope(int row, int column) {
+		//if user selects empty square returns a scope board completely false
+		boolean[][] scopeImpossible = new boolean[8][8];
+		if (isEmpty(row, column) == true) {
+			return scopeImpossible;
+		}
 		//gets the piece and it's color
 		Piece pieceToUse = getPiece(row, column);
 		String pieceColor = pieceToUse.getColor();
 
 		//refreshes the cache
 		pieceToUse.refreshCache();
+
+		//checks for special cache instructions
+		if (specialCache(row, column, pieceToUse) != null) {
+			pieceToUse.refreshCache(specialCache(row, column, pieceToUse));
+		}
 
 		//setups the return array of booleans and makes it initially all false
 		boolean[][] scopePossible = new boolean[8][8];
@@ -84,8 +139,6 @@ public class Board {
 				scopePossible[r][c] = false;
 			}
 		}
-		// current spot is true
-		scopePossible[row][column] = true;
 
 		///gets the cache
 		ArrayList<Object[]> scopeCache = pieceToUse.getCache();
@@ -93,7 +146,7 @@ public class Board {
 		int newRow = row;
 		int newCol = column;
 
-		//iterates trhough every code in the cache
+		//iterates through every code in the cache
 		for (int i = 0; i < scopeCache.size(); i++)
 		{
 			Object[] scopeCode = scopeCache.get(i);
@@ -145,6 +198,8 @@ public class Board {
 
 					if (newRow > 7 || newCol > 7)
 						break;
+					if (newRow < 0 || newCol < 0)
+						break;
 
 					else if (isEmpty(newRow, newCol))
 					{
@@ -166,32 +221,53 @@ public class Board {
 	public static void main (String[] args)
 	{
 		Board test = new Board();
+		System.out.println();
+		System.out.println("The Board for Scope Testing");
+		System.out.println();
+		System.out.println("Note: uppercase = White");
+		System.out.println("      lowercase = Black");
 		System.out.println(test);
+		System.out.println("Testing: getScope(3,3) - Black Rook");
 		System.out.println(printer(test.getScope(3,3)));
+		System.out.println("Testing: getScope(5,6) - White Bishop");
+		System.out.println(printer(test.getScope(5,6)));
+		System.out.println("Testing: getScope(4,4) - Black Queen");
+		System.out.println(printer(test.getScope(4,4)));
+		System.out.println("Testing: getScope(0,1) - Black Knight");
+		System.out.println(printer(test.getScope(0,1)));
+		System.out.println("Testing: getScope(2,2) - White King");
+		System.out.println(printer(test.getScope(2,2)));
+		System.out.println("Testing: getScope(5,5) - White Pawn");
+		System.out.println(printer(test.getScope(5,5)));
+		System.out.println("Testing: getScope(6,3) - White Pawn");
+		System.out.println(printer(test.getScope(6,3)));
 	}
 
 	
 	//prints arrays (temp testing function)
 	public static String printer (boolean[][] arrayToPrint)
 	{
-		String returnString = "";
-		for (int r = 0; r < arrayToPrint.length; r++)
-		{
-			String retRow = "| ";
-			for (int c = 0; c < arrayToPrint[0].length; c++)
-			{
-
-				retRow += arrayToPrint[r][c] + " ";
+		String returnString = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
+		for (int r = 0; r < arrayToPrint.length; r++) {
+			String retRow = r + " | ";
+			for (int c = 0; c < arrayToPrint[0].length; c++) {
+				if (arrayToPrint[r][c] == true) {
+					retRow += "T "; 
+				}
+				else {
+					retRow += "f ";
+				}
 			}
 			returnString += "\n" + retRow + "|";
 		}
+		returnString += "\n   ----------------- \n";
 		return returnString;
 	}
 
 	public String toString() { 
-		String retStr = "";
+		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
-			String retRow = "| ";
+			String retRow = x + " | ";
 			for (int y = 0; y < 8; y++) {
 				if (isEmpty(x,y)) {
 					retRow += "  ";
@@ -202,7 +278,7 @@ public class Board {
 			}
 			retStr += "\n" + retRow + "|";
 		}
-		retStr += "\n";
+		retStr += "\n   ----------------- \n";
 		return retStr;
     	}
 }

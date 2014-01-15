@@ -28,7 +28,7 @@ public abstract class Piece {
 
 	public abstract void refreshCache();
 
-	public abstract void refreshCache (int codeToRefresh);
+	public abstract void refreshCache(ArrayList<Integer> addCache);
 
 
 

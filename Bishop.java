@@ -11,11 +11,15 @@ public class Bishop extends Piece {
 	public Bishop (String color) {
 		super(color);
 		_scopeCache = new ArrayList<Object[]>();
+		_scopeCache.add(new Object[]{1,1,true,false,true});
+		_scopeCache.add(new Object[]{1,-1,true,false,true});
+		_scopeCache.add(new Object[]{-1,1,true,false,true});
+		_scopeCache.add(new Object[]{-1,-1,true,false,true});
 	}
 
-	public void refreshCache () {}
+	public void refreshCache () {};
 
-	public void refreshCache (int codeToRefresh) {}
+	public void refreshCache(ArrayList<Integer> addCache) {};
 
 	// toString
 	public String toString() {

@@ -11,24 +11,48 @@ public class Pawn extends Piece {
 	public Pawn (String color) {
 		super(color);
 		_scopeCache = new ArrayList<Object[]>();
-		_scopeCache.add(new Object[]{0,1,true,false,true});
-		_scopeCache.add(new Object[]{0,2,true,false,false});
-		_scopeCache.add(new Object[]{-1,1,true,false,false});
-		_scopeCache.add(new Object[]{1,1,true,false,false});
+		if (color == "Black") {
+			_scopeCache.add(new Object[]{0,1,false,false,true});
+			_scopeCache.add(new Object[]{0,2,false,false,true});
+		}
+		else {
+			_scopeCache.add(new Object[]{0,-1,false,false,true});
+			_scopeCache.add(new Object[]{0,-2,false,false,true});
+		}			
 	}
 
-	public void refreshCache () 
-	{
 
-	}
+	public void refreshCache () {};
 
-	public void refreshCache (int codeToRefresh) 
-	{
-		if (codeToRefresh == 1)
-		{
-			
+	public void refreshCache(ArrayList<Integer> instructions) {
+		for (int x = 0; x < instructions.size(); x++) {
+			if (instructions.get(x) == 1) {
+				_scopeCache.add(new Object[]{0,2,false,false,true});
+			}
+			if (instructions.get(x) == 2) {
+				_scopeCache.add(new Object[]{0,1,false,false,true});
+			}
+			if (instructions.get(x) == 3) {
+				_scopeCache.add(new Object[]{1,1,false,false,true});			
+			}
+			if (instructions.get(x) == 4) {
+				_scopeCache.add(new Object[]{1,-1,false,false,true});	
+			}
+			if (instructions.get(x) == 5) {
+				_scopeCache.add(new Object[]{0,-2,false,false,true});				
+			}
+			if (instructions.get(x) == 6) {
+				_scopeCache.add(new Object[]{0,-1,false,false,true});				
+			}
+			if (instructions.get(x) == 7) {
+				_scopeCache.add(new Object[]{-1,1,false,false,true});
+			}
+			if (instructions.get(x) == 8) {
+				_scopeCache.add(new Object[]{-1,-1,false,false,true});
+			}
 		}
 	}
+			
 
 	// toString
 	public String toString() {

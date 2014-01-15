@@ -11,11 +11,20 @@ public class Knight extends Piece {
 	public Knight (String color) {
 		super(color);
 		_scopeCache = new ArrayList<Object[]>();
+		_scopeCache.add(new Object[]{2,1,false,true,true});
+		_scopeCache.add(new Object[]{1,2,false,true,true});
+		_scopeCache.add(new Object[]{2,-1,false,true,true});
+		_scopeCache.add(new Object[]{1,-2,false,true,true});
+		_scopeCache.add(new Object[]{-2,1,false,true,true});
+		_scopeCache.add(new Object[]{-1,2,false,true,true});
+		_scopeCache.add(new Object[]{-2,-1,false,true,true});
+		_scopeCache.add(new Object[]{-1,-2,false,true,true});
 	}
 
-	public void refreshCache () {}
+	public void refreshCache () {};
 
-	public void refreshCache (int codeToRefresh) {}
+	public void refreshCache(ArrayList<Integer> addCache) {};
+
 
 	// toString
 	public String toString() {

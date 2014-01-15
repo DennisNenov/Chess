@@ -20,7 +20,7 @@ public class Rook extends Piece {
 
 	public void refreshCache () {}
 
-	public void refreshCache (int codeToRefresh) {}
+	public void refreshCache(ArrayList<Integer> addCache) {};
 
 	// toString
 	public String toString() {
