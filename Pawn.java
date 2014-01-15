@@ -10,10 +10,13 @@ public class Pawn extends Piece {
 	// constructor
 	public Pawn (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(1);
+		_scopeCache = new ArrayList<Object[]>();
 	}
 
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
+	
 	// toString
 	public String toString() {
 		if (_color == "White") {

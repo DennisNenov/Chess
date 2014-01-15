@@ -3,6 +3,8 @@
 
 // Board class for use with the Chess.java driver file.
 
+import java.util.ArrayList;
+
 public class Board {
 
 	// instance variables
@@ -59,26 +61,90 @@ public class Board {
 		return _board[row][column].getColor();
 	}
 
+	public boolean[][] getScope(int row, int column) 
+	{
+		Piece pieceToUse = getPiece(row, column);
+		String pieceColor = pieceToUse.getColor();
 
-	public String[][] scopePossible(int row, int column) {
-		String "color" = getPieceColor(row, column);
-		_scopePossible = new String[8][8];
-		// creation of initial mapping
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				// deterimines if a square is Free
-				if (isEmpty(x, y) == true) {
-					_scopePossible[x][y] == "F";
-				// determines if a square is occupied by an Ally
-				else if (getPieceColor(x, y) == "color") {
-					_scopePossible[x][y] == "A";
+		pieceToUse.refreshCache();
+
+		boolean[][] scopePossible = new boolean[8][8];
+
+		for (int r = 0; r < scopePossible.length; r++)
+		{
+			for (int c = 0; c < scopePossible[0].length; c++)
+			{
+				scopePossible[r][c] = false;
+			}
+		}
+
+
+		ArrayList<Object[]> scopeCache = pieceToUse.getCache();
+
+		int newRow = row;
+		int newCol = column;
+
+		for (int i = 0; i < scopeCache.size(); i++)
+		{
+			Object[] scopeCode = scopeCache.get(i);
+
+			int scopeXChange = (int) scopeCode[0];
+			int scopeYChange = (int) scopeCode[1];
+			boolean scopeContFlag = (boolean) scopeCode[2];
+			boolean scopeJumpFlag = (boolean) scopeCode[3];
+			boolean scopeSpecFlag = (boolean) scopeCode[4];
+
+			newRow = row;
+			newCol = column;
+
+			while (scopeSpecFlag)
+			{
+				if (scopeContFlag)
+				{
+					while (true)
+					{
+						newRow += scopeYChange;
+						newCol += scopeXChange;
+
+						if (newRow > 7 || newCol > 7)
+							break;
+
+						else if (isEmpty(newRow, newCol))
+						{
+							scopePossible[newRow][newCol] = true;					
+						}
+
+						else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
+						{
+							scopePossible[newRow][newCol] = true;
+						}
+
+					} 
 				}
-				// determines if a square is occupied by an Enemy
-				else if (getPieceColor(x, y) != "color") {
-					_scopePossible[x][y] == "E";
+				else
+				{
+					newRow += scopeYChange;
+					newCol += scopeXChange;
+
+					if (newRow > 7 || newCol > 7)
+						break;
+
+					else if (isEmpty(newRow, newCol))
+					{
+						scopePossible[newRow][newCol] = true;					
+					}
+
+					else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
+					{
+						scopePossible[newRow][newCol] = true;
+					}
 				}
 			}
 		}
+
+		return scopePossible;
+		// creation of initial mapping
+	}
 
 
 

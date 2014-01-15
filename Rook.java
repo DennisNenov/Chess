@@ -10,9 +10,17 @@ public class Rook extends Piece {
 	// constructor
 	public Rook (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(2);
+		_scopeCache = new ArrayList<Object[]>();
+		_scopeCache.add(new Object[]{1,0,true,false,true});
+		_scopeCache.add(new Object[]{-1,0,true,false,true});
+		_scopeCache.add(new Object[]{0,1,true,false,true});
+		_scopeCache.add(new Object[]{0,-1,true,false,true});
+
 	}
+
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
 
 	// toString
 	public String toString() {

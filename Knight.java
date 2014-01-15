@@ -10,9 +10,12 @@ public class Knight extends Piece {
 	// constructor
 	public Knight (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(4);
+		_scopeCache = new ArrayList<Object[]>();
 	}
+
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
 
 	// toString
 	public String toString() {

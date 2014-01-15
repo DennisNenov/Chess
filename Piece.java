@@ -5,18 +5,12 @@
 
 import java.util.ArrayList;
 
-//Movement Codes
-// 1 - pawn
-// 2 - rook
-// 3 - bishop
-// 4 - knight
-// 5 - king
+//scopecode [x-change, y-change, is the motion continous, can the piece jump other pieces, special restriction value]
 
 public abstract class Piece {
 
 	protected String _color;
-	protected ArrayList<Integer> _scopeList;
-	protected String[][] _scopePossible;
+	protected ArrayList<Object[]> _scopeCache;
 
 	public Piece (String color) {
 		_color = color;
@@ -26,9 +20,15 @@ public abstract class Piece {
 		return _color;
 	}
 
-	public String generatePossibleScope() {
-		return new Board();
+	public ArrayList<Object[]> getCache()
+	{
+		return _scopeCache;
 	}
+
+	public abstract void refreshCache();
+
+	public abstract void refreshCache (int codeToRefresh);
+
 
 
 

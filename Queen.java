@@ -10,10 +10,12 @@ public class Queen extends Piece {
 	// constructor
 	public Queen (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(2);
-		scopeList.add(3);
+		_scopeCache = new ArrayList<Object[]>();
 	}
+
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
 
 	// toString
 	public String toString() {

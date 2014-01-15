@@ -10,9 +10,12 @@ public class King extends Piece {
 	// constructor
 	public King (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(5);
+		_scopeCache = new ArrayList<Object[]>();
 	}
+
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
 
 	// toString
 	public String toString() {

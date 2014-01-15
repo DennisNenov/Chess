@@ -10,9 +10,12 @@ public class Bishop extends Piece {
 	// constructor
 	public Bishop (String color) {
 		super(color);
-		scopeList = new ArrayList<Integer>();
-		scopeList.add(3);
+		_scopeCache = new ArrayList<Object[]>();
 	}
+
+	public void refreshCache () {}
+
+	public void refreshCache (int codeToRefresh) {}
 
 	// toString
 	public String toString() {
