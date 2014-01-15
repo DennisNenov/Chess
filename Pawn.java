@@ -11,12 +11,25 @@ public class Pawn extends Piece {
 	public Pawn (String color) {
 		super(color);
 		_scopeCache = new ArrayList<Object[]>();
+		_scopeCache.add(new Object[]{0,1,true,false,true});
+		_scopeCache.add(new Object[]{0,2,true,false,false});
+		_scopeCache.add(new Object[]{-1,1,true,false,false});
+		_scopeCache.add(new Object[]{1,1,true,false,false});
 	}
 
-	public void refreshCache () {}
+	public void refreshCache () 
+	{
 
-	public void refreshCache (int codeToRefresh) {}
-	
+	}
+
+	public void refreshCache (int codeToRefresh) 
+	{
+		if (codeToRefresh == 1)
+		{
+			
+		}
+	}
+
 	// toString
 	public String toString() {
 		if (_color == "White") {

@@ -31,7 +31,10 @@ public class Board {
 			_board[1][x] = new Pawn("Black");
 		}
 
+		// test piece
 		_board[3][3] = new Rook("Black");
+
+
 		// instantiates the back row of white pieces
 		_board[7][0] = new Rook("White");
 		_board[7][1] = new Knight("White");
@@ -64,11 +67,14 @@ public class Board {
 
 	public boolean[][] getScope(int row, int column) 
 	{
+		//gets the piece and it's color
 		Piece pieceToUse = getPiece(row, column);
 		String pieceColor = pieceToUse.getColor();
 
+		//refreshes the cache
 		pieceToUse.refreshCache();
 
+		//setups the return array of booleans and makes it initially all false
 		boolean[][] scopePossible = new boolean[8][8];
 
 		for (int r = 0; r < scopePossible.length; r++)
@@ -78,17 +84,20 @@ public class Board {
 				scopePossible[r][c] = false;
 			}
 		}
+		// current spot is true
+		scopePossible[row][column] = true;
 
-
+		///gets the cache
 		ArrayList<Object[]> scopeCache = pieceToUse.getCache();
 
 		int newRow = row;
 		int newCol = column;
 
+		//iterates trhough every code in the cache
 		for (int i = 0; i < scopeCache.size(); i++)
 		{
 			Object[] scopeCode = scopeCache.get(i);
-
+			//relevant code data
 			int scopeXChange = (int) scopeCode[0];
 			int scopeYChange = (int) scopeCode[1];
 			boolean scopeContFlag = (boolean) scopeCode[2];
@@ -97,30 +106,38 @@ public class Board {
 
 			newRow = row;
 			newCol = column;
-
+			//loop only runs if code conditions are met ( which occurs when SpecFlag is true, which because of refreshing the cache is accurate)
 			while (scopeSpecFlag)
 			{
+				//if the motion is continous (e.g. the piece goes in a line) keep looping and checking
 				if (scopeContFlag)
 				{
+
+					//see if the new potential places are valid, if they are mark them as true
 					while ((newRow < 7 && newCol < 7) && (newRow > 0 && newCol > 0) )
 					{
 						newRow += scopeYChange;
 						newCol += scopeXChange;
 
-						System.out.println("newRow: " + newRow + " newCol: " + newCol);
+						//System.out.println("newRow: " + newRow + " newCol: " + newCol);
 
 						if (isEmpty(newRow, newCol))
 						{
 							scopePossible[newRow][newCol] = true;					
 						}
-
+						else if ((pieceColor.equals(getPieceColor(newRow, newCol))))
+						{
+							break;
+						}
 						else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
 						{
 							scopePossible[newRow][newCol] = true;
+							break;
 						}
 
 					} 
 				}
+				// if the motion isn't continous then only check the piece directly ahead
 				else
 				{
 					newRow += scopeYChange;
@@ -142,9 +159,8 @@ public class Board {
 				break;
 			}
 		}
-
+		//return array of trues/falses about where the piece can land
 		return scopePossible;
-		// creation of initial mapping
 	}
 
 	public static void main (String[] args)
@@ -154,6 +170,8 @@ public class Board {
 		System.out.println(printer(test.getScope(3,3)));
 	}
 
+	
+	//prints arrays (temp testing function)
 	public static String printer (boolean[][] arrayToPrint)
 	{
 		String returnString = "";

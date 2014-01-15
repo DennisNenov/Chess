@@ -11,6 +11,7 @@ public abstract class Piece {
 
 	protected String _color;
 	protected ArrayList<Object[]> _scopeCache;
+	
 
 	public Piece (String color) {
 		_color = color;
