@@ -31,7 +31,6 @@ public class Board {
 			_board[1][x] = new Pawn("Black");
 		}
 
-		_board[3][3] = new Rook("Black");
 		// instantiates the back row of white pieces
 		_board[7][0] = new Rook("White");
 		_board[7][1] = new Knight("White");
@@ -102,14 +101,15 @@ public class Board {
 			{
 				if (scopeContFlag)
 				{
-					while ((newRow < 7 && newCol < 7) && (newRow > 0 && newCol > 0) )
+					while (true)
 					{
 						newRow += scopeYChange;
 						newCol += scopeXChange;
 
-						System.out.println("newRow: " + newRow + " newCol: " + newCol);
+						if (newRow > 7 || newCol > 7)
+							break;
 
-						if (isEmpty(newRow, newCol))
+						else if (isEmpty(newRow, newCol))
 						{
 							scopePossible[newRow][newCol] = true;					
 						}
@@ -139,7 +139,6 @@ public class Board {
 						scopePossible[newRow][newCol] = true;
 					}
 				}
-				break;
 			}
 		}
 
@@ -147,28 +146,7 @@ public class Board {
 		// creation of initial mapping
 	}
 
-	public static void main (String[] args)
-	{
-		Board test = new Board();
-		System.out.println(test);
-		System.out.println(printer(test.getScope(3,3)));
-	}
 
-	public static String printer (boolean[][] arrayToPrint)
-	{
-		String returnString = "";
-		for (int r = 0; r < arrayToPrint.length; r++)
-		{
-			String retRow = "| ";
-			for (int c = 0; c < arrayToPrint[0].length; c++)
-			{
-
-				retRow += arrayToPrint[r][c] + " ";
-			}
-			returnString += "\n" + retRow + "|";
-		}
-		return returnString;
-	}
 
 	public String toString() { 
 		String retStr = "";
