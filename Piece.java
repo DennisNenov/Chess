@@ -11,14 +11,23 @@ public abstract class Piece {
 
 	protected String _color;
 	protected ArrayList<Object[]> _scopeCache;
-	
+	protected String[][] _snapshot;
+	protected int _rowvalue, _columnvalue;
 
-	public Piece (String color) {
+	public Piece (String color) 
+	{
 		_color = color;
 	}
 
 	public String getColor() {
 		return _color;
+	}
+
+	public void setSnapshot (String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter)
+	{
+		_snapshot = snapshotToEnter;
+		_rowvalue = rowvalueToEnter;
+		_columnvalue = columnvalueToEnter;
 	}
 
 	public ArrayList<Object[]> getCache()
@@ -28,7 +37,6 @@ public abstract class Piece {
 
 	public abstract void refreshCache();
 
-	public abstract void refreshCache(ArrayList<Integer> addCache);
 
 
 

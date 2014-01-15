@@ -57,59 +57,57 @@ public class Board {
 
 	// methods
 
-	public boolean isEmpty(int row, int column) {
-		return (_board[row][column] == null);
+	public boolean isOut (int row, int column)
+	{
+		return (row > 7 || row < 0 || column > 7 || column < 0);
+
+	}
+
+	public boolean isEmpty(int row, int column) 
+	{
+			return (_board[row][column] == null);
 	}
 
 	public Piece getPiece(int row, int column) {
 		return _board[row][column];
 	}
 
-	public String getPieceColor(int row, int column) {
+	public String getPieceColor(int row, int column) 
+	{
 		return _board[row][column].getColor();
 	}
 
-	public ArrayList<Integer> specialCache(int row, int column, Piece piece) {
-		ArrayList<Integer> retSpecials = new ArrayList<Integer>();
-		if ((piece instanceof Pawn) == true) {
-			if (piece.getColor() == "Black") {
-				if (row == 1) {
-					retSpecials.add(1);
-					retSpecials.add(2);
+
+	//generates 3 by 3 snapshot of the area around the piece
+	public String[][] genSnapshot(int row, int column)
+	{
+		String[][] snapshot = new String[3][3];
+
+		int[] posrow = {row - 1 , row, row + 1};
+		int[] poscol = {column - 1, column, column + 1};
+
+		for (int r = 0; r <= 2; r++)
+		{
+			for (int c = 0; c <= 2; c++)
+			{
+				if (isOut(posrow[r], poscol[c]))
+				{
+					snapshot[r][c] = "Out";
 				}
-				else {
-					retSpecials.add(2);
+				else if (isEmpty(posrow[r], poscol[c]))
+				{
+					snapshot[r][c] = "Empty";
 				}
-				if (getPiece(row + 1, column + 1).getColor() == "White") {
-					retSpecials.add(3);
-				}
-				if (getPiece(row + 1, column - 1).getColor() == "White") {
-					retSpecials.add(4);
-				}
-			}
-			else {
-				if (row == 6) {
-					retSpecials.add(5);
-					retSpecials.add(6);
-				}
-				else {
-					retSpecials.add(6);
-				}
-				if (!(isEmpty(row - 1, column + 1))) {
-					if (getPiece(row - 1, column + 1).getColor() == "Black") {
-						retSpecials.add(7);
-					}
-				}
-				if (!(isEmpty(row - 1, column - 1))) {
-					if (getPiece(row - 1, column - 1).getColor() == "Black") {
-						retSpecials.add(8);
-					}
+				else
+				{
+					snapshot[r][c] = getPieceColor(posrow[r], poscol[c]);
 				}
 			}
 		}
-		return retSpecials;
-	}
 
+		return snapshot;
+
+	}
 
 	public boolean[][] getScope(int row, int column) {
 		//if user selects empty square returns a scope board completely false
@@ -122,12 +120,8 @@ public class Board {
 		String pieceColor = pieceToUse.getColor();
 
 		//refreshes the cache
+		pieceToUse.setSnapshot(genSnapshot(row, column), row, column);
 		pieceToUse.refreshCache();
-
-		//checks for special cache instructions
-		if (specialCache(row, column, pieceToUse) != null) {
-			pieceToUse.refreshCache(specialCache(row, column, pieceToUse));
-		}
 
 		//setups the return array of booleans and makes it initially all false
 		boolean[][] scopePossible = new boolean[8][8];
@@ -169,8 +163,8 @@ public class Board {
 					//see if the new potential places are valid, if they are mark them as true
 					while ((newRow < 7 && newCol < 7) && (newRow > 0 && newCol > 0) )
 					{
-						newRow += scopeYChange;
-						newCol += scopeXChange;
+						newRow -= scopeYChange;
+						newCol -= scopeXChange;
 
 						//System.out.println("newRow: " + newRow + " newCol: " + newCol);
 
@@ -193,13 +187,13 @@ public class Board {
 				// if the motion isn't continous then only check the piece directly ahead
 				else
 				{
-					newRow += scopeYChange;
-					newCol += scopeXChange;
+					newRow -= scopeYChange;
+					newCol -= scopeXChange;
 
-					if (newRow > 7 || newCol > 7)
+					if (isOut(newRow, newCol))
+					{
 						break;
-					if (newRow < 0 || newCol < 0)
-						break;
+					}
 
 					else if (isEmpty(newRow, newCol))
 					{
@@ -209,6 +203,7 @@ public class Board {
 					else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
 					{
 						scopePossible[newRow][newCol] = true;
+						break;
 					}
 				}
 				break;
@@ -227,8 +222,9 @@ public class Board {
 		System.out.println("Note: uppercase = White");
 		System.out.println("      lowercase = Black");
 		System.out.println(test);
-		System.out.println("Testing: getScope(3,3) - Black Rook");
-		System.out.println(printer(test.getScope(3,3)));
+
+		System.out.println("Testing: getScope(3,4) - Black Rook");
+		System.out.println(printer(test.getScope(3,4)));
 		System.out.println("Testing: getScope(5,6) - White Bishop");
 		System.out.println(printer(test.getScope(5,6)));
 		System.out.println("Testing: getScope(4,4) - Black Queen");
@@ -241,6 +237,7 @@ public class Board {
 		System.out.println(printer(test.getScope(5,5)));
 		System.out.println("Testing: getScope(6,3) - White Pawn");
 		System.out.println(printer(test.getScope(6,3)));
+
 	}
 
 	
@@ -257,6 +254,21 @@ public class Board {
 				else {
 					retRow += "f ";
 				}
+			}
+			returnString += "\n" + retRow + "|";
+		}
+		returnString += "\n   ----------------- \n";
+		return returnString;
+	}
+
+	public static String printer (String[][] arrayToPrint)
+	{
+		String returnString = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
+		for (int r = 0; r < arrayToPrint.length; r++) {
+			String retRow = r + " | ";
+			for (int c = 0; c < arrayToPrint[0].length; c++) 
+			{
+					retRow = retRow + " " + arrayToPrint[r][c] + " "; 
 			}
 			returnString += "\n" + retRow + "|";
 		}

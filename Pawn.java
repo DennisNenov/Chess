@@ -8,49 +8,23 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 
 	// constructor
-	public Pawn (String color) {
+	public Pawn (String color) 
+	{
 		super(color);
 		_scopeCache = new ArrayList<Object[]>();
-		if (color == "Black") {
-			_scopeCache.add(new Object[]{0,1,false,false,true});
-			_scopeCache.add(new Object[]{0,2,false,false,true});
-		}
-		else {
-			_scopeCache.add(new Object[]{0,-1,false,false,true});
-			_scopeCache.add(new Object[]{0,-2,false,false,true});
-		}			
+		_scopeCache.add(new Object[]{0,1,false,false,true});
+		_scopeCache.add(new Object[]{0,2,false,false,false});
+		_scopeCache.add(new Object[]{-1,1,false,false,false});
+		_scopeCache.add(new Object[]{1,1,false,false,false});			
 	}
 
 
-	public void refreshCache () {};
-
-	public void refreshCache(ArrayList<Integer> instructions) {
-		for (int x = 0; x < instructions.size(); x++) {
-			if (instructions.get(x) == 1) {
-				_scopeCache.add(new Object[]{0,2,false,false,true});
-			}
-			if (instructions.get(x) == 2) {
-				_scopeCache.add(new Object[]{0,1,false,false,true});
-			}
-			if (instructions.get(x) == 3) {
-				_scopeCache.add(new Object[]{1,1,false,false,true});			
-			}
-			if (instructions.get(x) == 4) {
-				_scopeCache.add(new Object[]{1,-1,false,false,true});	
-			}
-			if (instructions.get(x) == 5) {
-				_scopeCache.add(new Object[]{0,-2,false,false,true});				
-			}
-			if (instructions.get(x) == 6) {
-				_scopeCache.add(new Object[]{0,-1,false,false,true});				
-			}
-			if (instructions.get(x) == 7) {
-				_scopeCache.add(new Object[]{-1,1,false,false,true});
-			}
-			if (instructions.get(x) == 8) {
-				_scopeCache.add(new Object[]{-1,-1,false,false,true});
-			}
-		}
+	public void refreshCache () 
+	{
+		_scopeCache.set(0, new Object[]{0,1,false,false,true});
+		_scopeCache.set(1, new Object[]{0,2,false,false,((_rowvalue == 1 && _color.equals("Black")) || (_rowvalue == 6 && _color.equals("White")))});
+		_scopeCache.set(2, new Object[]{-1,1,false,false,((!(_snapshot[0][0]).equals(_color))&&(!(_snapshot[0][0]).equals("Empty"))&&(!(_snapshot[0][0]).equals("Out")))});
+		_scopeCache.set(3, new Object[]{1,1,false,false,((!(_snapshot[0][0]).equals(_color))&&(!(_snapshot[0][0]).equals("Empty"))&&(!(_snapshot[0][0]).equals("Out")))});
 	}
 			
 

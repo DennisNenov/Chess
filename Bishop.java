@@ -19,8 +19,6 @@ public class Bishop extends Piece {
 
 	public void refreshCache () {};
 
-	public void refreshCache(ArrayList<Integer> addCache) {};
-
 	// toString
 	public String toString() {
 		if (_color == "White") {

@@ -23,8 +23,6 @@ public class Knight extends Piece {
 
 	public void refreshCache () {};
 
-	public void refreshCache(ArrayList<Integer> addCache) {};
-
 
 	// toString
 	public String toString() {
