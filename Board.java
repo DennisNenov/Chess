@@ -16,7 +16,7 @@ public class Board {
 		// initializes 2d array of Pieces
 		_board = new Piece[8][8];
 
-		// instantiates the back row of black pieces
+		// instantiates the back row of pieces with the color specified in color1
 		_board[0][0] = new Rook(color1);
 		_board[0][1] = new Knight(color1);
 		_board[0][2] = new Bishop(color1);
@@ -26,7 +26,7 @@ public class Board {
 		_board[0][6] = new Knight(color1);
 		_board[0][7] = new Rook(color1);
 
-		// instantiates the front row of black pieces
+		// instantiates the front row of pieces with the color specified in color1
 		for (int x = 0; x < 8; x++) {
 			_board[1][x] = new Pawn(color1);
 		}
@@ -39,7 +39,7 @@ public class Board {
 		_board[5][5] = new Pawn(color2);
 
 
-		// instantiates the back row of white pieces
+		// instantiates the back row of pieces with the color specified in color2
 		_board[7][0] = new Rook(color2);
 		_board[7][1] = new Knight(color2);
 		_board[7][2] = new Bishop(color2);;
@@ -49,14 +49,14 @@ public class Board {
 		_board[7][6] = new Knight(color2);
 		_board[7][7] = new Rook(color2);
 
-		// instantiates the front row of white pieces
+		// instantiates the front row of pieces with the color specified in color2
 		for (int x = 0; x < 8; x++) {
 			_board[6][x] = new Pawn(color2);
 		}
 	}
 
 	// methods
-
+	//checks if the pair is out of bounds
 	public boolean isOut (int row, int column)
 	{
 		return (row > 7 || row < 0 || column > 7 || column < 0);
@@ -92,6 +92,7 @@ public class Board {
 			{
 				if (isOut(posrow[r], poscol[c]))
 				{
+					//out means out of bounds
 					snapshot[r][c] = "Out";
 				}
 				else if (isEmpty(posrow[r], poscol[c]))
