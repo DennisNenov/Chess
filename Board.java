@@ -109,21 +109,8 @@ public class Board {
 
 	}
 
-	public boolean[][] getScope(int row, int column) {
-		//if user selects empty square returns a scope board completely false
-		boolean[][] scopeImpossible = new boolean[8][8];
-		if (isEmpty(row, column) == true) {
-			return scopeImpossible;
-		}
-		//gets the piece and it's color
-		Piece pieceToUse = getPiece(row, column);
-		String pieceColor = pieceToUse.getColor();
-
-		//refreshes the cache
-		pieceToUse.setSnapshot(genSnapshot(row, column), row, column);
-		pieceToUse.refreshCache();
-
-		//setups the return array of booleans and makes it initially all false
+	public boolean[][] getScope(int row, int column) 
+	{
 		boolean[][] scopePossible = new boolean[8][8];
 
 		for (int r = 0; r < scopePossible.length; r++)
@@ -134,9 +121,24 @@ public class Board {
 			}
 		}
 
-		///gets the cache
+		//if the user selects an empty square or an out of bounds sqaure, return a scope board completely false
+		if (isEmpty(row, column) || isOut(row,column)) 
+		{
+			return scopePossible;
+		}
+
+		//gets the piece and its color
+		Piece pieceToUse = getPiece(row, column);
+		String pieceColor = pieceToUse.getColor();
+
+		//refreshes the piece's cache
+		pieceToUse.setSnapshot(genSnapshot(row, column), row, column);
+		pieceToUse.refreshCache();
+
+		///gets the cache, so this method can access it
 		ArrayList<Object[]> scopeCache = pieceToUse.getCache();
 
+		//setup location variables for square ahead
 		int newRow = row;
 		int newCol = column;
 
@@ -153,62 +155,36 @@ public class Board {
 
 			newRow = row;
 			newCol = column;
-			//loop only runs if code conditions are met ( which occurs when SpecFlag is true, which because of refreshing the cache is accurate)
-			while (scopeSpecFlag)
+			//loop only runs if code conditions are met (i.e. when the spot ahead isn't out of bounds or when SpecFlag is true, which because of refreshing the cache is accurate)
+			//loops see if the new potential places are valid, if they are mark them as true
+			while (scopeSpecFlag && (!(isOut(newRow - scopeYChange, newCol - scopeXChange))))
 			{
-				//if the motion is continous (e.g. the piece goes in a line) keep looping and checking
-				if (scopeContFlag)
+				newRow -= scopeYChange;
+				newCol -= scopeXChange;
+
+				if (isEmpty(newRow, newCol))
 				{
-
-					//see if the new potential places are valid, if they are mark them as true
-					while ((newRow < 7 && newCol < 7) && (newRow > 0 && newCol > 0) )
-					{
-						newRow -= scopeYChange;
-						newCol -= scopeXChange;
-
-						//System.out.println("newRow: " + newRow + " newCol: " + newCol);
-
-						if (isEmpty(newRow, newCol))
-						{
-							scopePossible[newRow][newCol] = true;					
-						}
-						else if ((pieceColor.equals(getPieceColor(newRow, newCol))))
-						{
-							break;
-						}
-						else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
-						{
-							scopePossible[newRow][newCol] = true;
-							break;
-						}
-
-					} 
+					scopePossible[newRow][newCol] = true;					
 				}
-				// if the motion isn't continous then only check the piece directly ahead
-				else
+				//break when you hit a piece (either enemy or firendly)
+				else if ((pieceColor.equals(getPieceColor(newRow, newCol))))
 				{
-					newRow -= scopeYChange;
-					newCol -= scopeXChange;
-
-					if (isOut(newRow, newCol))
-					{
-						break;
-					}
-
-					else if (isEmpty(newRow, newCol))
-					{
-						scopePossible[newRow][newCol] = true;					
-					}
-
-					else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
-					{
-						scopePossible[newRow][newCol] = true;
-						break;
-					}
+					break;
 				}
-				break;
-			}
+				else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
+				{
+					scopePossible[newRow][newCol] = true;
+					break;
+				}
+				//break if the motion isn't continous (this way the loop only runs once)
+				if (scopeContFlag == false)
+				{
+					break;
+				}
+
+			} 
 		}
+				
 		//return array of trues/falses about where the piece can land
 		return scopePossible;
 	}
@@ -237,6 +213,8 @@ public class Board {
 		System.out.println(printer(test.getScope(5,5)));
 		System.out.println("Testing: getScope(6,3) - White Pawn");
 		System.out.println(printer(test.getScope(6,3)));
+		System.out.println("Testing: getScope(2,6) - Empty Square");
+		System.out.println(printer(test.getScope(2,6)));
 
 	}
 
