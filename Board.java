@@ -30,7 +30,6 @@ public class Board {
 		for (int x = 0; x < 8; x++) {
 			_board[1][x] = new Pawn(color1);
 		}
-
 		// test pieces
 		_board[3][4] = new Rook(color1);
 		_board[5][6] = new Bishop(color2);
@@ -38,7 +37,7 @@ public class Board {
 		_board[2][2] = new King(color2);
 		_board[5][5] = new Pawn(color2);
 
-
+		
 		// instantiates the back row of pieces with the color specified in color2
 		_board[7][0] = new Rook(color2);
 		_board[7][1] = new Knight(color2);
@@ -53,6 +52,15 @@ public class Board {
 		for (int x = 0; x < 8; x++) {
 			_board[6][x] = new Pawn(color2);
 		}
+
+		//test for checkmate
+		/*
+		_board[3][3] = new King(color1);
+		_board[2][3] = new Queen(color2);
+		_board[4][3] = new Queen(color2);
+		_board[3][4] = new Queen(color2);
+		_board[3][2] = new Queen(color2);
+		*/
 	}
 
 	// methods
@@ -74,12 +82,7 @@ public class Board {
 
 	public String getPieceColor(int row, int column) 
 	{
-		if (isEmpty(row, column)) {
-			return "Empty";
-		}
-		else {
-			return _board[row][column].getColor();
-		}
+		return _board[row][column].getColor();
 	}
 
 
@@ -126,12 +129,13 @@ public class Board {
 				scopePossible[r][c] = false;
 			}
 		}
-
 		//if the user selects an empty square or an out of bounds sqaure, return a scope board completely false
 		if (isEmpty(row, column) || isOut(row,column)) 
 		{
 			return scopePossible;
 		}
+
+		scopePossible[row][column] = true;
 
 		//gets the piece and its color
 		Piece pieceToUse = getPiece(row, column);
@@ -200,7 +204,7 @@ public class Board {
 		boolean[][] colorScope = new boolean[8][8];
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if (getPieceColor(x, y) == color) {
+				if ((!(isEmpty(x,y))) && (getPieceColor(x, y).equals(color))) {
 					incorporateScope(x, y, colorScope);
 				}
 			}
@@ -227,47 +231,56 @@ public class Board {
 		return (getPiece(row, column) instanceof King);
 	}
 
-	// check and checkmate functions
-	public boolean isChecked(String color1, String color2) {
+	public int[] getKingCor (String colorInput)
+	{
+		int[] cor = new int[2];
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if ((isKing(x, y) == true) && (getPieceColor(x, y) == color1)) {
-					if (getColorScope(color2)[x][y] == true) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean isCheckMated(String color1, String color2) {
-		//if (isChecked(color1, color2) != true) {
-		//	return false;
-		//}
-		int row;
-		int column;
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				if ((isKing(x, y) == true) && (getPieceColor(x, y) == color1)) {
-					row = x;
-					column = y;
+				if ((isKing(x, y) == true) && (getPieceColor(x, y).equals(colorInput))) {
+					cor[0] = x;
+					cor[1] = y;
 					break;
 				}
 			}
 		}
-		
-		boolean retBoo = true;
-		for (int p = -1; p < 2; p++) {
-			for (int q = -1; q < 2; q++) {
-				if (getScope(row, column)[row + p][column + q] == true) {
-					if (getColorScope(color2)[row + p][row + column] == false)
-						retBoo = false;
-					}
+		return cor;
+	}
+
+	// check and checkmate functions, we check to see if color1 is checked
+	public boolean isChecked(String color1,  String color2) 
+	{
+		int[] corking = getKingCor(color1);
+		return getColorScope(color2)[corking[0]][corking[1]];
+	}
+
+
+	public boolean isCheckMated(String color1, String color2) 
+	{
+		if (!(isChecked(color1, color2))) 
+		{
+			return false;
+		}
+
+		int[] corking = getKingCor(color1);
+		boolean[][] scopeKing = getScope(corking[0], corking[1]);
+		boolean[][] scopeOther = getColorScope(color2);
+
+		int[] posrow = {corking[0] - 1 , corking[0], corking[0] + 1};
+		int[] poscol = {corking[1] - 1, corking[0], corking[0] + 1};
+
+		for (int r = 0; r <= 2; r++)
+		{
+			for (int c = 0; c <= 2; c++)
+			{
+				boolean sKing = scopeKing[posrow[r]][poscol[c]];
+				boolean sOther = scopeOther[posrow[r]][poscol[c]];
+				if ((!(isOut(posrow[r], poscol[c]))) && (sKing == true) && (sOther == false))
+				{
+					return false;
 				}
 			}
 		}
-		return retBoo;
+		return true;
 	}				
 				
 
@@ -301,10 +314,16 @@ public class Board {
 		System.out.println(test);
 		System.out.println("Testing: getColorScope() - White");
 		System.out.println(printer(test.getColorScope("White")));
+		System.out.println("Testing: getColorScope() - Black");
+		System.out.println(printer(test.getColorScope("Black")));
 		System.out.println("Testing: isCheck() - White");
 		System.out.println(test.isChecked("White", "Black"));
 		System.out.println("Testing: isCheck() - Black");
 		System.out.println(test.isChecked("Black", "White"));
+		System.out.println("Testing: isCheckMated() - White");
+		System.out.println(test.isCheckMated("White", "Black"));
+		System.out.println("Testing: isCheckMated() - Black");
+		System.out.println(test.isCheckMated("Black", "White"));
 
 	}
 	
