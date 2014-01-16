@@ -11,47 +11,47 @@ public class Board {
 	private Piece[][] _board;
 
 	// default constructor
-	public Board() {
+	public Board(String color1, String color2) {
 
 		// initializes 2d array of Pieces
 		_board = new Piece[8][8];
 
 		// instantiates the back row of black pieces
-		_board[0][0] = new Rook("Black");
-		_board[0][1] = new Knight("Black");
-		_board[0][2] = new Bishop("Black");
-		_board[0][3] = new Queen("Black");
-		_board[0][4] = new King("Black");
-		_board[0][5] = new Bishop("Black");
-		_board[0][6] = new Knight("Black");
-		_board[0][7] = new Rook("Black");
+		_board[0][0] = new Rook(color1);
+		_board[0][1] = new Knight(color1);
+		_board[0][2] = new Bishop(color1);
+		_board[0][3] = new Queen(color1);
+		_board[0][4] = new King(color1);
+		_board[0][5] = new Bishop(color1);
+		_board[0][6] = new Knight(color1);
+		_board[0][7] = new Rook(color1);
 
 		// instantiates the front row of black pieces
 		for (int x = 0; x < 8; x++) {
-			_board[1][x] = new Pawn("Black");
+			_board[1][x] = new Pawn(color1);
 		}
 
 		// test pieces
-		_board[3][4] = new Rook("Black");
-		_board[5][6] = new Bishop("White");
-		_board[4][4] = new Queen("Black");
-		_board[2][2] = new King("White");
-		_board[5][5] = new Pawn("White");
+		_board[3][4] = new Rook(color1);
+		_board[5][6] = new Bishop(color2);
+		_board[4][4] = new Queen(color1);
+		_board[2][2] = new King(color2);
+		_board[5][5] = new Pawn(color2);
 
 
 		// instantiates the back row of white pieces
-		_board[7][0] = new Rook("White");
-		_board[7][1] = new Knight("White");
-		_board[7][2] = new Bishop("White");;
-		_board[7][3] = new Queen("White");
-		_board[7][4] = new King("White");;
-		_board[7][5] = new Bishop("White");
-		_board[7][6] = new Knight("White");
-		_board[7][7] = new Rook("White");
+		_board[7][0] = new Rook(color2);
+		_board[7][1] = new Knight(color2);
+		_board[7][2] = new Bishop(color2);;
+		_board[7][3] = new Queen(color2);
+		_board[7][4] = new King(color2);;
+		_board[7][5] = new Bishop(color2);
+		_board[7][6] = new Knight(color2);
+		_board[7][7] = new Rook(color2);
 
 		// instantiates the front row of white pieces
 		for (int x = 0; x < 8; x++) {
-			_board[6][x] = new Pawn("White");
+			_board[6][x] = new Pawn(color2);
 		}
 	}
 
@@ -155,8 +155,8 @@ public class Board {
 
 			newRow = row;
 			newCol = column;
-			//loop only runs if code conditions are met (i.e. when the spot ahead isn't out of bounds or when SpecFlag is true, which because of refreshing the cache is accurate)
-			//loops see if the new potential places are valid, if they are mark them as true
+			//loop only runs if certain conditions are met (i.e. when the spot ahead isn't out of bounds or when SpecFlag is true, which because of refreshing the cache is accurate)
+			//loop sees if new potential places are valid, and mark them as true if they are
 			while (scopeSpecFlag && (!(isOut(newRow - scopeYChange, newCol - scopeXChange))))
 			{
 				newRow -= scopeYChange;
@@ -166,7 +166,7 @@ public class Board {
 				{
 					scopePossible[newRow][newCol] = true;					
 				}
-				//break when you hit a piece (either enemy or firendly)
+				//break when you hit a piece (either enemy or friendly)
 				else if ((pieceColor.equals(getPieceColor(newRow, newCol))))
 				{
 					break;
@@ -191,7 +191,7 @@ public class Board {
 
 	public static void main (String[] args)
 	{
-		Board test = new Board();
+		Board test = new Board("Black", "White");
 		System.out.println();
 		System.out.println("The Board for Scope Testing");
 		System.out.println();
