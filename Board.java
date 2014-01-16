@@ -74,7 +74,12 @@ public class Board {
 
 	public String getPieceColor(int row, int column) 
 	{
-		return _board[row][column].getColor();
+		if (isEmpty(row, column)) {
+			return "Empty";
+		}
+		else {
+			return _board[row][column].getColor();
+		}
 	}
 
 
@@ -190,8 +195,84 @@ public class Board {
 		return scopePossible;
 	}
 
-	public static void main (String[] args)
-	{
+	// for use in determining check and checkmate
+	public boolean[][] getColorScope(String color) {
+		boolean[][] colorScope = new boolean[8][8];
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if (getPieceColor(x, y) == color) {
+					incorporateScope(x, y, colorScope);
+				}
+			}
+		}
+		return colorScope;
+	}
+
+	// helper function for getColorScope
+	public boolean[][] incorporateScope(int row, int column, boolean[][] colorScope) {
+		boolean[][] scopeReceiver = colorScope;
+		boolean[][] scopeSender = getScope(row, column);
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((scopeReceiver[x][y] == false) && (scopeSender[x][y] == true)) {
+					scopeReceiver[x][y] = true;
+				}
+			}
+		}
+		return scopeReceiver;
+	}
+
+	// helper function for check and checkmate
+	public boolean isKing(int row, int column) {
+		return (getPiece(row, column) instanceof King);
+	}
+
+	// check and checkmate functions
+	public boolean isChecked(String color1, String color2) {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((isKing(x, y) == true) && (getPieceColor(x, y) == color1)) {
+					if (getColorScope(color2)[x][y] == true) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isCheckMated(String color1, String color2) {
+		//if (isChecked(color1, color2) != true) {
+		//	return false;
+		//}
+		int row;
+		int column;
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((isKing(x, y) == true) && (getPieceColor(x, y) == color1)) {
+					row = x;
+					column = y;
+					break;
+				}
+			}
+		}
+		
+		boolean retBoo = true;
+		for (int p = -1; p < 2; p++) {
+			for (int q = -1; q < 2; q++) {
+				if (getScope(row, column)[row + p][column + q] == true) {
+					if (getColorScope(color2)[row + p][row + column] == false)
+						retBoo = false;
+					}
+				}
+			}
+		}
+		return retBoo;
+	}				
+				
+
+	public static void main (String[] args) {
+
 		Board test = new Board("Black", "White");
 		System.out.println();
 		System.out.println("The Board for Scope Testing");
@@ -216,9 +297,16 @@ public class Board {
 		System.out.println(printer(test.getScope(6,3)));
 		System.out.println("Testing: getScope(2,6) - Empty Square");
 		System.out.println(printer(test.getScope(2,6)));
+		System.out.println("The Board for Scope Testing");
+		System.out.println(test);
+		System.out.println("Testing: getColorScope() - White");
+		System.out.println(printer(test.getColorScope("White")));
+		System.out.println("Testing: isCheck() - White");
+		System.out.println(test.isChecked("White", "Black"));
+		System.out.println("Testing: isCheck() - Black");
+		System.out.println(test.isChecked("Black", "White"));
 
 	}
-
 	
 	//prints arrays (temp testing function)
 	public static String printer (boolean[][] arrayToPrint)
