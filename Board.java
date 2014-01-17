@@ -31,11 +31,13 @@ public class Board {
 			_board[1][x] = new Pawn(color1);
 		}
 		// test pieces
+		/*
 		_board[3][4] = new Rook(color1);
 		_board[5][6] = new Bishop(color2);
 		_board[4][4] = new Queen(color1);
 		_board[2][2] = new King(color2);
 		_board[5][5] = new Pawn(color2);
+		*/
 
 		
 		// instantiates the back row of pieces with the color specified in color2
@@ -85,6 +87,32 @@ public class Board {
 		return _board[row][column].getColor();
 	}
 
+	// for use as Human helper file
+	public boolean isValidPiece(int row, int column, String color) {
+		if ( (isOut(row, column) == false) &&
+		     (isEmpty(row, column) == false) &&
+		     (getPieceColor(row, column) == color) ) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isValidMove(int row, int column, String coordinates) {
+		int xCor = Integer.parseInt(coordinates.substring(0,1));
+		int yCor = Integer.parseInt(coordinates.substring(2,3));
+		if (getScope(xCor,yCor)[row][column]) {
+			_board[row][column] = getPiece(xCor, yCor);
+			_board[xCor][yCor] = null;
+			return true;
+		}
+		else {
+			System.out.println("Error: invalid choice - please try again.");
+			System.out.println();
+			System.out.println("Here, this board displays your options:");
+			System.out.println(printer(getScope(xCor,yCor)));
+			return false;
+		}	
+	}
 
 	//generates 3 by 3 snapshot of the area around the piece
 	public String[][] genSnapshot(int row, int column)
