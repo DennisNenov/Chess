@@ -42,7 +42,6 @@ public class Chess {
 
 	public static void main(String [] args) {
 		Chess chess = new Chess();
-		System.out.println(chess.getBoard());
-		chess._player1.movePiece(chess.getBoard());
+		chess.run();
 	}
 }
