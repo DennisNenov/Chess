@@ -34,11 +34,11 @@ public class Pawn extends Piece {
 		_scopeCache.set(2, new Object[]{0,2,false,false,(_rowvalue == 6 && _color.equals(_color2))});
 		_scopeCache.set(3, new Object[]{0,-2,false,false,(_rowvalue == 1 && _color.equals(_color1))});
 
-		_scopeCache.set(4, new Object[]{-1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[0][0]).equals(_color1)))});
-		_scopeCache.set(5, new Object[]{-1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[2][0]).equals(_color2)))});
+		_scopeCache.set(4, new Object[]{-1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[1][1]).equals(_color1)))});
+		_scopeCache.set(5, new Object[]{-1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[3][1]).equals(_color2)))});
 
-		_scopeCache.set(6, new Object[]{1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[0][2]).equals(_color1)))});
-		_scopeCache.set(7, new Object[]{1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[2][2]).equals(_color2)))});
+		_scopeCache.set(6, new Object[]{1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[1][3]).equals(_color1)))});
+		_scopeCache.set(7, new Object[]{1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[3][3]).equals(_color2)))});
 	}
 			
 

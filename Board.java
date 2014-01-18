@@ -35,11 +35,18 @@ public class Board {
 			_board[1][x] = new Pawn(color1, color1, color2);
 		}
 
+		
+		/* checkmate test
 		_board[3][4] = new Rook(color1, color1, color2);
 		_board[5][6] = new Bishop(color2, color1, color2);
 		_board[4][4] = new Queen(color1, color1, color2);
 		_board[2][2] = new King(color2, color1, color2);
 		_board[5][5] = new Pawn(color2, color1, color2);
+		*/
+		//check test
+		//_board[3][2] = new King(color2, color1, color2);
+
+		
 
 
 		
@@ -48,7 +55,7 @@ public class Board {
 		_board[7][1] = new Knight(color2, color1, color2);
 		_board[7][2] = new Bishop(color2, color1, color2);;
 		_board[7][3] = new Queen(color2, color1, color2);
-		//_board[7][4] = new King(color2, color1, color2);
+		_board[7][4] = new King(color2, color1, color2);
 		_board[7][5] = new Bishop(color2, color1, color2);
 		_board[7][6] = new Knight(color2, color1, color2);
 		_board[7][7] = new Rook(color2, color1, color2);
@@ -120,14 +127,14 @@ public class Board {
 	//generates 3 by 3 snapshot of the area around the piece
 	public String[][] genSnapshot(int row, int column)
 	{
-		String[][] snapshot = new String[3][3];
+		String[][] snapshot = new String[5][5];
 
-		int[] posrow = {row - 1 , row, row + 1};
-		int[] poscol = {column - 1, column, column + 1};
+		int[] posrow = {row - 2, row - 1 , row, row + 1, row + 2};
+		int[] poscol = {column -2, column - 1, column, column + 1, column + 2};
 
-		for (int r = 0; r <= 2; r++)
+		for (int r = 0; r <= 4; r++)
 		{
-			for (int c = 0; c <= 2; c++)
+			for (int c = 0; c <= 4; c++)
 			{
 				if (isOut(posrow[r], poscol[c]))
 				{
