@@ -8,29 +8,43 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 
 	// constructor
-	public Pawn (String color) 
+	public Pawn (String color, String color1, String color2) 
 	{
-		super(color);
+		super(color, color1, color2);
 		_scopeCache = new ArrayList<Object[]>();
-		_scopeCache.add(new Object[]{0,1,false,false,true});
+		_scopeCache.add(new Object[]{0,1,false,false,false});
+		_scopeCache.add(new Object[]{0,-1,false,false,false});
+		//
 		_scopeCache.add(new Object[]{0,2,false,false,false});
+		_scopeCache.add(new Object[]{0,-2,false,false,false});
+		//
 		_scopeCache.add(new Object[]{-1,1,false,false,false});
-		_scopeCache.add(new Object[]{1,1,false,false,false});			
+		_scopeCache.add(new Object[]{-1,-1,false,false,false});
+		//
+		_scopeCache.add(new Object[]{1,1,false,false,false});
+		_scopeCache.add(new Object[]{1,-1,false,false,false});			
 	}
 
 
 	public void refreshCache () 
 	{
-		_scopeCache.set(0, new Object[]{0,1,false,false,true});
-		_scopeCache.set(1, new Object[]{0,2,false,false,((_rowvalue == 1 && _color.equals("Black")) || (_rowvalue == 6 && _color.equals("White")))});
-		_scopeCache.set(2, new Object[]{-1,1,false,false,((!(_snapshot[0][0]).equals(_color))&&(!(_snapshot[0][0]).equals("Empty"))&&(!(_snapshot[0][0]).equals("Out")))});
-		_scopeCache.set(3, new Object[]{1,1,false,false,((!(_snapshot[0][0]).equals(_color))&&(!(_snapshot[0][0]).equals("Empty"))&&(!(_snapshot[0][0]).equals("Out")))});
+		_scopeCache.set(0, new Object[]{0,1,false,false,_color.equals(_color2)});
+		_scopeCache.set(1, new Object[]{0,-1,false,false,_color.equals(_color1)});
+
+		_scopeCache.set(2, new Object[]{0,2,false,false,(_rowvalue == 6 && _color.equals(_color2))});
+		_scopeCache.set(3, new Object[]{0,-2,false,false,(_rowvalue == 1 && _color.equals(_color1))});
+
+		_scopeCache.set(4, new Object[]{-1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[0][0]).equals(_color1)))});
+		_scopeCache.set(5, new Object[]{-1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[2][0]).equals(_color2)))});
+
+		_scopeCache.set(6, new Object[]{1,1,false,false,( (_color.equals(_color2)) && ((_snapshot[0][2]).equals(_color1)))});
+		_scopeCache.set(7, new Object[]{1,-1,false,false,( (_color.equals(_color1)) && ((_snapshot[2][2]).equals(_color2)))});
 	}
 			
 
 	// toString
 	public String toString() {
-		if (_color == "White") {
+		if (_color.equals(_color2)) {
 			return "P";
 		}
 		else {

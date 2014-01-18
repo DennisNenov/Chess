@@ -9,59 +9,62 @@ public class Board {
 
 	// instance variables
 	private Piece[][] _board;
+	private String _color1, _color2;
 
 	// default constructor
 	public Board(String color1, String color2) {
+
+		_color1 = color1;
+		_color2 = color2;
 
 		// initializes 2d array of Pieces
 		_board = new Piece[8][8];
 
 		// instantiates the back row of pieces with the color specified in color1
-		_board[0][0] = new Rook(color1);
-		_board[0][1] = new Knight(color1);
-		_board[0][2] = new Bishop(color1);
-		_board[0][3] = new Queen(color1);
-		_board[0][4] = new King(color1);
-		_board[0][5] = new Bishop(color1);
-		_board[0][6] = new Knight(color1);
-		_board[0][7] = new Rook(color1);
+		_board[0][0] = new Rook(color1, color1, color2);
+		_board[0][1] = new Knight(color1, color1, color2);
+		_board[0][2] = new Bishop(color1, color1, color2);
+		_board[0][3] = new Queen(color1, color1, color2);
+		_board[0][4] = new King(color1, color1, color2);
+		_board[0][5] = new Bishop(color1, color1, color2);
+		_board[0][6] = new Knight(color1, color1, color2);
+		_board[0][7] = new Rook(color1, color1, color2);
 
 		// instantiates the front row of pieces with the color specified in color1
 		for (int x = 0; x < 8; x++) {
-			_board[1][x] = new Pawn(color1);
+			_board[1][x] = new Pawn(color1, color1, color2);
 		}
-		// test pieces
-		/*
-		_board[3][4] = new Rook(color1);
-		_board[5][6] = new Bishop(color2);
-		_board[4][4] = new Queen(color1);
-		_board[2][2] = new King(color2);
-		_board[5][5] = new Pawn(color2);
-		*/
+
+		_board[3][4] = new Rook(color1, color1, color2);
+		_board[5][6] = new Bishop(color2, color1, color2);
+		_board[4][4] = new Queen(color1, color1, color2);
+		_board[2][2] = new King(color2, color1, color2);
+		_board[5][5] = new Pawn(color2, color1, color2);
+
 
 		
 		// instantiates the back row of pieces with the color specified in color2
-		_board[7][0] = new Rook(color2);
-		_board[7][1] = new Knight(color2);
-		_board[7][2] = new Bishop(color2);;
-		_board[7][3] = new Queen(color2);
-		_board[7][4] = new King(color2);;
-		_board[7][5] = new Bishop(color2);
-		_board[7][6] = new Knight(color2);
-		_board[7][7] = new Rook(color2);
+		_board[7][0] = new Rook(color2, color1, color2);
+		_board[7][1] = new Knight(color2, color1, color2);
+		_board[7][2] = new Bishop(color2, color1, color2);;
+		_board[7][3] = new Queen(color2, color1, color2);
+		//_board[7][4] = new King(color2, color1, color2);
+		_board[7][5] = new Bishop(color2, color1, color2);
+		_board[7][6] = new Knight(color2, color1, color2);
+		_board[7][7] = new Rook(color2, color1, color2);
 
 		// instantiates the front row of pieces with the color specified in color2
 		for (int x = 0; x < 8; x++) {
-			_board[6][x] = new Pawn(color2);
+			_board[6][x] = new Pawn(color2, color1, color2);
 		}
 
 		//test for checkmate
 		/*
-		_board[3][3] = new King(color1);
-		_board[2][3] = new Queen(color2);
-		_board[4][3] = new Queen(color2);
-		_board[3][4] = new Queen(color2);
-		_board[3][2] = new Queen(color2);
+		_board[3][3] = new King(color1, color1, color2);
+		_board[2][3] = new Queen(color2, color1, color2);
+		_board[4][3] = new Queen(color2, color1, color2);
+		_board[3][4] = new Queen(color2, color1, color2);
+		_board[3][2] = new Queen(color2, color1, color2);
 		*/
 	}
 
@@ -195,10 +198,10 @@ public class Board {
 			newCol = column;
 			//loop only runs if certain conditions are met (i.e. when the spot ahead isn't out of bounds or when SpecFlag is true, which because of refreshing the cache is accurate)
 			//loop sees if new potential places are valid, and mark them as true if they are
-			while (scopeSpecFlag && (!(isOut(newRow - scopeYChange, newCol - scopeXChange))))
+			while (scopeSpecFlag && (!(isOut(newRow - scopeYChange, newCol + scopeXChange))))
 			{
 				newRow -= scopeYChange;
-				newCol -= scopeXChange;
+				newCol += scopeXChange;
 
 				if (isEmpty(newRow, newCol))
 				{
@@ -390,8 +393,11 @@ public class Board {
 		return returnString;
 	}
 
-	public String toString() { 
-		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
+	public String toString() {
+		String retStr = "The Board\n";
+		retStr += "Note: uppercase = " + _color2 + "\n";
+		retStr += "      lowercase = " + _color1 + "\n"; 
+		retStr += "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
 			String retRow = x + " | ";
 			for (int y = 0; y < 8; y++) {

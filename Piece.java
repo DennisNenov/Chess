@@ -9,25 +9,32 @@ import java.util.ArrayList;
 
 public abstract class Piece {
 
-	protected String _color;
+	protected String _color, _color1, _color2;
 	protected ArrayList<Object[]> _scopeCache;
 	protected String[][] _snapshot;
 	protected int _rowvalue, _columnvalue;
 
-	public Piece (String color) 
+	public Piece (String color, String color1, String color2) 
 	{
 		_color = color;
+		_color1 = color1;
+		_color2 = color2;
 	}
 
 	public String getColor() {
 		return _color;
 	}
 
+	public String[][] getSnapshot()
+	{
+		return _snapshot;
+	}
 	public void setSnapshot (String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter)
 	{
 		_snapshot = snapshotToEnter;
 		_rowvalue = rowvalueToEnter;
 		_columnvalue = columnvalueToEnter;
+		
 	}
 
 	public ArrayList<Object[]> getCache()
@@ -36,11 +43,5 @@ public abstract class Piece {
 	}
 
 	public abstract void refreshCache();
-
-
-
-
-
-
 }
 

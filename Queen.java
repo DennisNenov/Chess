@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Queen extends Piece {
 
 	// constructor
-	public Queen (String color) {
-		super(color);
+	public Queen (String color, String color1, String color2 ) {
+		super(color, color1, color2);
 		_scopeCache = new ArrayList<Object[]>();
 		_scopeCache.add(new Object[]{1,0,true,false,true});
 		_scopeCache.add(new Object[]{-1,0,true,false,true});
@@ -26,7 +26,7 @@ public class Queen extends Piece {
 
 	// toString
 	public String toString() {
-		if (_color == "White") {
+		if (_color.equals(_color2)) {
 			return "Q";
 		}
 		else {

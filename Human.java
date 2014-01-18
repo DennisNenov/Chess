@@ -21,7 +21,7 @@ public class Human extends Player {
 	public String selectPiece(Board board) {
 		boolean complete = false;
 		String coordinates = "";
-		while (!(complete)) {
+		while (true) {
 			System.out.println("To select a piece type its coordinates [0,7] :");
 			System.out.print("x = ");
 			int xCor = Keyboard.readInt();
@@ -30,7 +30,7 @@ public class Human extends Player {
 			System.out.println();
 			if (board.isValidPiece(xCor, yCor, getColor())) {
 				coordinates = xCor + "," + yCor;
-				complete = true;
+				break;
 			}
 			else {
 				System.out.println("Error: invalid choice - please try again.");
