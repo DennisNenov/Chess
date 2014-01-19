@@ -4,6 +4,7 @@
 // Human subclass for use with the Chess.java driver file.
 
 import cs1.Keyboard;
+import java.util.ArrayList;
 
 public class Human extends Player {
 
@@ -14,37 +15,60 @@ public class Human extends Player {
 
 	// methods
 	public void movePiece(Board board) {
-		String coordinates = selectPiece(board);
+		int[] coordinates = selectPiece(board);
 		selectMove(coordinates, board);
 	}
 
-	public String selectPiece(Board board) {
-		boolean complete = false;
-		String coordinates = "";
+	public int[] selectPiece(Board board) {
+		int[] coordinates = new int[2];
 		while (true) {
 			System.out.println("To select a piece type its coordinates [0,7] :");
-			System.out.print("x = ");
-			int xCor = Keyboard.readInt();
-			System.out.print("y = ");
-			int yCor = Keyboard.readInt();
-			System.out.println();
-			if (board.isValidPiece(xCor, yCor, getColor()) == "valid") {
-				coordinates = xCor + "," + yCor;
+			int[] input = inputCoordinates();
+			if (board.isValidPiece(input, _color)) {
+				coordinates = input;
 				break;
 			}
 			else {
-				selectError(board.isValidPiece(xCor, yCor, getColor()));
+				feedback(input, board);
 			}
 		}
 		return coordinates;
 	}
 
-	public void selectError(String error) {
-		if (error == "out") {
+	public void selectMove(int[] coordinates, Board board) {
+		while (true) {
+			System.out.println("Type coordinates of piece destination [0,7] :");
+			int[] move = createMove(coordinates, inputCoordinates());
+			/*System.out.println(move[0]);
+			System.out.println(move[1]);
+			System.out.println(move[2]);
+			System.out.println(move[3]);
+			System.out.println(board.isValidMove(move));*/
+			if (board.isValidMove(move)) {
+				board.executeMove(move);
+				break;
+			}
+			feedback(move, board);
+		}
+	}
+
+	public int[] inputCoordinates() {
+		int[] coordinates = new int[2];
+		System.out.print("x = ");
+		coordinates[0] = Keyboard.readInt();
+		System.out.print("y = ");
+		coordinates[1] = Keyboard.readInt();
+		return coordinates;
+	}
+
+	public void feedback(int[] coordinates, Board board) {
+		int x = coordinates[0];
+		int y = coordinates[1];
+		if (board.isOut(x,y)) {
 			System.out.println("Error: invalid choice - not in bounds.");
 			System.out.println("valid input = {0, 1, 2, 3, 4, 5, 6, 7}\n");
 		}
-		else if (error == "empty") {
+		else if (board.isEmpty(x,y)) {
 			System.out.println("Error: invalid choice - tile contains no piece.");
 			System.out.println("to move first select one of your pieces\n");
 		}
@@ -52,25 +76,5 @@ public class Human extends Player {
 			System.out.println("Error: invalid choice - piece is wrong color.");
 			System.out.println("please choose a " + _color + " piece\n");
 		}
-	}		
-
-	public void selectMove(String coordinates, Board board) {
-		boolean complete = false;
-		while (!(complete)) {
-			System.out.println("Type coordinates of piece destination [0,7] :");
-			System.out.print("x = ");
-			int xCor = Keyboard.readInt();
-			System.out.print("y = ");
-			int yCor = Keyboard.readInt();
-			System.out.println();
-			if (board.isValidMove(xCor, yCor, coordinates)) {
-				complete = true;
-			}
-		}
-	}
-				
-
-		
-	
-		
+	}				
 }

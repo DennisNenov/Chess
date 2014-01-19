@@ -14,8 +14,11 @@ public class Chess {
 
 	// default constructor
 	public Chess() {
+		System.out.println("\nChess by Nicholas Romanoff & Dennis Nennov\n");
+		System.out.println("Player One");
 		_player1 = new Human();
-		_player2 = new Human();
+		System.out.println("\nPlayer Two");
+		_player2 = new Computer();
 		_board = new Board(_player1.getColor(), _player2.getColor());
 	}
 
@@ -27,6 +30,8 @@ public class Chess {
 	// turns
 	public void run() {
 		int turns = 0;
+		System.out.println("\nlowercase: " + _player1.getColor());
+		System.out.println("uppercase: " + _player2.getColor() + "\n");
 		System.out.println(_board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
@@ -36,6 +41,7 @@ public class Chess {
 				else
 					System.out.println(_player1.getColor() + ", your turn.");
 				_player1.movePiece(_board);
+				System.out.println(_board);
 			}
 			else {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor()))
@@ -44,7 +50,6 @@ public class Chess {
 					System.out.println(_player2.getColor() + ", your turn.");
 				_player2.movePiece(_board);
 			}
-			System.out.println(_board);
 			turns++;
 		}
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))

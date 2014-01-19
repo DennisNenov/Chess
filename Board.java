@@ -98,40 +98,50 @@ public class Board {
 	}
 
 	// -----------------------------------------------------------------------
-	// Human Helper Methods:
+	// Player Helper Methods:
 	// -----------------------------------------------------------------------
 
-	public String isValidPiece(int row, int column, String color) {
-		if (isOut(row, column) == true) {
-			return "out";
-		}
-		else if (isEmpty(row, column) == true) {
-			return "empty";
-		}
-		else if (getPieceColor(row, column) != color) {
-			return "color";
-		}
-		else {
-			return "valid";
-		}
+	public boolean isValidPiece(int[] coordinates, String color) {
+		int x = coordinates[0];
+		int y = coordinates[1];
+		return ((isOut(x,y) == false) &&
+		        (isEmpty(x,y) == false) &&
+		        (getPieceColor(x,y) == color));
 	}
 
-	public boolean isValidMove(int row, int column, String coordinates) {
-		int xCor = Integer.parseInt(coordinates.substring(0,1));
-		int yCor = Integer.parseInt(coordinates.substring(2,3));
-		if (getScope(xCor,yCor)[row][column]) {
-			_board[row][column] = getPiece(xCor, yCor);
-			_board[xCor][yCor] = null;
-			return true;
-		}
-		else {
+	public boolean isValidMove(int[] move) {
+		int x1 = move[0];
+		int y1 = move[1];
+		int x2 = move[2];
+		int y2 = move[3];
+		if (!(getScope(x1,y1)[x2][y2])) {
 			System.out.println("Error: invalid choice - please try again.");
 			System.out.println();
 			System.out.println("Here, this board displays your options:");
-			System.out.println(printer(getScope(xCor,yCor)));
+			System.out.println(printer(getScope(x1,y1)));
 			return false;
-		}	
+		}
+		return true;
 	}
+
+	public boolean isValidMoveComp(int[] move) {
+		int x1 = move[0];
+		int y1 = move[1];
+		int x2 = move[2];
+		int y2 = move[3];
+		return (getScope(x1,y1)[x2][y2]);
+	}
+
+	public void executeMove(int[] move) {
+		int x1 = move[0];
+		int y1 = move[1];
+		int x2 = move[2];
+		int y2 = move[3];
+		_board[x2][y2] = getPiece(x1,y1);
+		_board[x1][y1] = null;
+		System.out.println("\nMove complete.");
+	}
+
 	// -----------------------------------------------------------------------
 
 	//generates 3 by 3 snapshot of the area around the piece
@@ -330,50 +340,6 @@ public class Board {
 		}
 		return true;
 	}				
-				
-
-	public static void main (String[] args) {
-
-		Board test = new Board("Black", "White");
-		System.out.println();
-		System.out.println("The Board for Scope Testing");
-		System.out.println();
-		System.out.println("Note: uppercase = White");
-		System.out.println("      lowercase = Black");
-		System.out.println(test);
-
-		System.out.println("Testing: getScope(3,4) - Black Rook");
-		System.out.println(printer(test.getScope(3,4)));
-		System.out.println("Testing: getScope(5,6) - White Bishop");
-		System.out.println(printer(test.getScope(5,6)));
-		System.out.println("Testing: getScope(4,4) - Black Queen");
-		System.out.println(printer(test.getScope(4,4)));
-		System.out.println("Testing: getScope(0,1) - Black Knight");
-		System.out.println(printer(test.getScope(0,1)));
-		System.out.println("Testing: getScope(2,2) - White King");
-		System.out.println(printer(test.getScope(2,2)));
-		System.out.println("Testing: getScope(5,5) - White Pawn");
-		System.out.println(printer(test.getScope(5,5)));
-		System.out.println("Testing: getScope(6,3) - White Pawn");
-		System.out.println(printer(test.getScope(6,3)));
-		System.out.println("Testing: getScope(2,6) - Empty Square");
-		System.out.println(printer(test.getScope(2,6)));
-		System.out.println("The Board for Scope Testing");
-		System.out.println(test);
-		System.out.println("Testing: getColorScope() - White");
-		System.out.println(printer(test.getColorScope("White")));
-		System.out.println("Testing: getColorScope() - Black");
-		System.out.println(printer(test.getColorScope("Black")));
-		System.out.println("Testing: isCheck() - White");
-		System.out.println(test.isChecked("White", "Black"));
-		System.out.println("Testing: isCheck() - Black");
-		System.out.println(test.isChecked("Black", "White"));
-		System.out.println("Testing: isCheckMated() - White");
-		System.out.println(test.isCheckMated("White", "Black"));
-		System.out.println("Testing: isCheckMated() - Black");
-		System.out.println(test.isCheckMated("Black", "White"));
-
-	}
 	
 	//prints arrays (temp testing function)
 	public static String printer (boolean[][] arrayToPrint)
@@ -411,10 +377,7 @@ public class Board {
 	}
 
 	public String toString() {
-		String retStr = "The Board\n";
-		retStr += "Note: uppercase = " + _color2 + "\n";
-		retStr += "      lowercase = " + _color1 + "\n"; 
-		retStr += "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
+		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
 			String retRow = x + " | ";
 			for (int y = 0; y < 8; y++) {
