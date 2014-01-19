@@ -8,7 +8,7 @@ import cs1.Keyboard;
 public abstract class Player {
 
 	// instance variables
-	private String _color;
+	protected String _color;
 
 	// default constructor
 	public Player() {

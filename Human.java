@@ -28,16 +28,31 @@ public class Human extends Player {
 			System.out.print("y = ");
 			int yCor = Keyboard.readInt();
 			System.out.println();
-			if (board.isValidPiece(xCor, yCor, getColor())) {
+			if (board.isValidPiece(xCor, yCor, getColor()) == "valid") {
 				coordinates = xCor + "," + yCor;
 				break;
 			}
 			else {
-				System.out.println("Error: invalid choice - please try again.");
+				selectError(board.isValidPiece(xCor, yCor, getColor()));
 			}
 		}
 		return coordinates;
 	}
+
+	public void selectError(String error) {
+		if (error == "out") {
+			System.out.println("Error: invalid choice - not in bounds.");
+			System.out.println("valid input = {0, 1, 2, 3, 4, 5, 6, 7}\n");
+		}
+		else if (error == "empty") {
+			System.out.println("Error: invalid choice - tile contains no piece.");
+			System.out.println("to move first select one of your pieces\n");
+		}
+		else {
+			System.out.println("Error: invalid choice - piece is wrong color.");
+			System.out.println("please choose a " + _color + " piece\n");
+		}
+	}		
 
 	public void selectMove(String coordinates, Board board) {
 		boolean complete = false;

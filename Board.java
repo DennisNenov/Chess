@@ -97,14 +97,23 @@ public class Board {
 		return _board[row][column].getColor();
 	}
 
-	// for use as Human helper file
-	public boolean isValidPiece(int row, int column, String color) {
-		if ( (isOut(row, column) == false) &&
-		     (isEmpty(row, column) == false) &&
-		     (getPieceColor(row, column) == color) ) {
-			return true;
+	// -----------------------------------------------------------------------
+	// Human Helper Methods:
+	// -----------------------------------------------------------------------
+
+	public String isValidPiece(int row, int column, String color) {
+		if (isOut(row, column) == true) {
+			return "out";
 		}
-		return false;
+		else if (isEmpty(row, column) == true) {
+			return "empty";
+		}
+		else if (getPieceColor(row, column) != color) {
+			return "color";
+		}
+		else {
+			return "valid";
+		}
 	}
 
 	public boolean isValidMove(int row, int column, String coordinates) {
@@ -123,6 +132,7 @@ public class Board {
 			return false;
 		}	
 	}
+	// -----------------------------------------------------------------------
 
 	//generates 3 by 3 snapshot of the area around the piece
 	public String[][] genSnapshot(int row, int column)
