@@ -37,13 +37,13 @@ public class Board
 		}
 
 		
-		_board[2][4] = new Rook(color1, color1, color2);
-		_board[4][6] = new Bishop(color2, color1, color2);
+		//_board[2][4] = new Rook(color1, color1, color2);
+		//_board[4][6] = new Bishop(color2, color1, color2);
 		//_board[3][4] = new Rook(color1, color1, color2);
 		//_board[5][6] = new Bishop(color2, color1, color2);
 		//_board[4][4] = new Queen(color1, color1, color2);
-		_board[2][2] = new King(color2, color1, color2);
-		_board[5][5] = new Pawn(color2, color1, color2);
+		//_board[2][2] = new King(color2, color1, color2);
+		//_board[5][5] = new Pawn(color2, color1, color2);
 		
 		//check test
 		//_board[3][2] = new King(color2, color1, color2);
@@ -57,7 +57,7 @@ public class Board
 		_board[7][1] = new Knight(color2, color1, color2);
 		_board[7][2] = new Bishop(color2, color1, color2);;
 		_board[7][3] = new Queen(color2, color1, color2);
-		//_board[7][4] = new King(color2, color1, color2);
+		_board[7][4] = new King(color2, color1, color2);
 		_board[7][5] = new Bishop(color2, color1, color2);
 		_board[7][6] = new Knight(color2, color1, color2);
 		_board[7][7] = new Rook(color2, color1, color2);
