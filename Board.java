@@ -307,7 +307,7 @@ public class Board
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if ((!(isEmpty(x,y))) && (getPieceColor(x, y).equals(color)) && (getScope(x,y)[row][column] == true) ) {
+				if ((!(isEmpty(x,y))) && (!(isOut(x,y))) && (getPieceColor(x, y).equals(color)) && (getScope(x,y)[row][column] == true) ) {
 					reachList.add(new Integer[]{x,y});
 				}
 			}
@@ -472,23 +472,24 @@ public class Board
 		boolean[][] scopeOther = getColorScope(color2);
 
 		int[] posrow = {corking[0] - 1 , corking[0], corking[0] + 1};
-		int[] poscol = {corking[1] - 1, corking[0], corking[0] + 1};
+		int[] poscol = {corking[1] - 1, corking[1], corking[1] + 1};
 
 		for (int r = 0; r <= 2; r++)
 		{
 			for (int c = 0; c <= 2; c++)
 			{
 				int x = posrow[r];
-				int y = posrow[c];
-				boolean sKing = scopeKing[x][y];
-				boolean sOther = scopeOther[x][y];
-				if ((!(isOut(x,y))) && (sKing == true) && (isEmpty(x,y)) && (sOther == false))
+				int y = poscol[c];
+				System.out.println("x: " + x + "y: " + y);
+				//System.out.println(((!(isOut(x,y))) + " " + scopeKing[x][y] + " " + (isEmpty(x,y)) + (scopeOther[x][y])));
+				if ((!(isOut(x,y))) && (scopeKing[x][y] == true) && (isEmpty(x,y)) && (scopeOther[x][y] == false))
 				{
 					return false;
 				}
-				if ((!(isOut(x,y))) && (!isEmpty(x,y)) && (sKing == true))
+				if ((!(isOut(x,y))) && (!isEmpty(x,y)) && (scopeKing[x][y] == true))
 				{
 					Board newBoard = copyBoard(this);
+					System.out.println("new board:\n" + newBoard);
 					newBoard._board[x][y] = getPiece(corking[0],corking[1]);
 					newBoard._board[corking[0]][corking[1]] = null;
 					if (newBoard.getColorScope(color2)[x][y] == false)
@@ -507,6 +508,12 @@ public class Board
 			if ((!(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]))) && (scopeGood[attackers.get(i)[0]][attackers.get(i)[0]] == true))
 				return false;
 		}		
+
+		System.out.println("\ncolor: " + color1);
+		System.out.println("\nking cor: " + corking[0] + " and " + corking[1]);
+		System.out.println("scopeKing: \n" + printer(scopeKing));
+		System.out.println("scopeOther: \n" + printer(scopeOther));
+		System.out.println("scopeGood: \n" + printer(scopeGood));
 
 		return true;
 	}				
