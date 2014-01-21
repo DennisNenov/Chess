@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Chess {
+public class Chess implements ActionListener {
 
 	// instance variables
 	private Board _board;	
@@ -98,6 +98,7 @@ public class Chess {
 			}
 			turns++;
 		}
+
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))
 			System.out.println(_player2.getColor() + ", you have won.");
 		else if ((_board.isCheckMated(_player2.getColor(), _player1.getColor())))
@@ -118,6 +119,7 @@ public class Chess {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				_buttonBoard[x][y] = new JButton(_board.getPieceString(x,y));
+				_buttonBoard[x][y].addActionListener(this);
 			}
 		}		
 
@@ -136,16 +138,15 @@ public class Chess {
 		frame.setVisible(true);
 	}
 
-
-		
-
-	
-
-
-
-
-
-
+	public void actionPerformed(ActionEvent event) {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if (event.getSource() == _buttonBoard[x][y]) {
+					_buttonBoard[x][y].setText("!");
+				}
+			}	
+		}
+	}
 
 	public static void main(String [] args) {
 		Chess chess = new Chess();

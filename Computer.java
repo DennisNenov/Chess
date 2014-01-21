@@ -40,11 +40,12 @@ public class Computer extends Player {
 		return moves;
 	}
 
-	public void selectMove(ArrayList<int[]> moves,Board board) {
+	public void selectMove(ArrayList<int[]> moves,Board board) {	
 		int move = ((int) (Math.random() * moves.size()));
 		board.executeMove(moves.get(move));
 		System.out.println(board);
 	}
+
 		
 		
 		

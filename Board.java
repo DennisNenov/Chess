@@ -140,6 +140,7 @@ public class Board
 			return _color1;	
 	}
 
+
 	// -----------------------------------------------------------------------
 	// Player Helper Methods:
 	// -----------------------------------------------------------------------
@@ -581,7 +582,7 @@ public class Board
 
     public static void main (String[] args)
     {
-    			Board test = new Board("Black", "White");
+    		Board test = new Board("Black", "White");
 		System.out.println();
 		System.out.println("The Board for Scope Testing");
 		System.out.println();

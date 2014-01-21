@@ -39,11 +39,6 @@ public class Human extends Player {
 		while (true) {
 			System.out.println("Type coordinates of piece destination [0,7] :");
 			int[] move = createMove(coordinates, inputCoordinates());
-			/*System.out.println(move[0]);
-			System.out.println(move[1]);
-			System.out.println(move[2]);
-			System.out.println(move[3]);
-			System.out.println(board.isValidMove(move));*/
 			if (board.isValidMove(move)) {
 				board.executeMove(move);
 				break;
