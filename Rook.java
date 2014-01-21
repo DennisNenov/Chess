@@ -12,10 +12,10 @@ public class Rook extends Piece {
 	{
 		super(color, color1, color2);
 		_scopeCache = new ArrayList<Object[]>();
-		_scopeCache.add(new Object[]{1,0,true,false,true});
-		_scopeCache.add(new Object[]{-1,0,true,false,true});
-		_scopeCache.add(new Object[]{0,1,true,false,true});
-		_scopeCache.add(new Object[]{0,-1,true,false,true});
+		_scopeCache.add(new Object[]{1,0,true,false,true,true});
+		_scopeCache.add(new Object[]{-1,0,true,false,true,true});
+		_scopeCache.add(new Object[]{0,1,true,false,true,true});
+		_scopeCache.add(new Object[]{0,-1,true,false,true,true});
 
 	}
 

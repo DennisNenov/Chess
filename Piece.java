@@ -5,7 +5,7 @@
 
 import java.util.ArrayList;
 
-//scopecode [x-change, y-change, is the motion continous, can the piece jump other pieces, special restriction value]
+//scopecode [x-change, y-change, is the motion continous, can the piece jump other pieces, capturable flag, special restriction value]
 
 public abstract class Piece {
 

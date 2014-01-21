@@ -5,7 +5,8 @@
 
 import java.util.ArrayList;
 
-public class Board {
+public class Board 
+{
 
 	// instance variables
 	private Piece[][] _board;
@@ -36,13 +37,14 @@ public class Board {
 		}
 
 		
-		/* checkmate test
-		_board[3][4] = new Rook(color1, color1, color2);
-		_board[5][6] = new Bishop(color2, color1, color2);
-		_board[4][4] = new Queen(color1, color1, color2);
+		_board[2][4] = new Rook(color1, color1, color2);
+		_board[4][6] = new Bishop(color2, color1, color2);
+		//_board[3][4] = new Rook(color1, color1, color2);
+		//_board[5][6] = new Bishop(color2, color1, color2);
+		//_board[4][4] = new Queen(color1, color1, color2);
 		_board[2][2] = new King(color2, color1, color2);
 		_board[5][5] = new Pawn(color2, color1, color2);
-		*/
+		
 		//check test
 		//_board[3][2] = new King(color2, color1, color2);
 
@@ -55,7 +57,7 @@ public class Board {
 		_board[7][1] = new Knight(color2, color1, color2);
 		_board[7][2] = new Bishop(color2, color1, color2);;
 		_board[7][3] = new Queen(color2, color1, color2);
-		_board[7][4] = new King(color2, color1, color2);
+		//_board[7][4] = new King(color2, color1, color2);
 		_board[7][5] = new Bishop(color2, color1, color2);
 		_board[7][6] = new Knight(color2, color1, color2);
 		_board[7][7] = new Rook(color2, color1, color2);
@@ -95,6 +97,14 @@ public class Board {
 	public String getPieceColor(int row, int column) 
 	{
 		return _board[row][column].getColor();
+	}
+
+	public String flipColor(String colorToFlip)
+	{
+		if (colorToFlip.equals(_color1))
+			return _color2;
+		else
+			return _color1;	
 	}
 
 	// -----------------------------------------------------------------------
@@ -193,8 +203,6 @@ public class Board {
 			return scopePossible;
 		}
 
-		scopePossible[row][column] = true;
-
 		//gets the piece and its color
 		Piece pieceToUse = getPiece(row, column);
 		String pieceColor = pieceToUse.getColor();
@@ -219,7 +227,8 @@ public class Board {
 			int scopeYChange = (int) scopeCode[1];
 			boolean scopeContFlag = (boolean) scopeCode[2];
 			boolean scopeJumpFlag = (boolean) scopeCode[3];
-			boolean scopeSpecFlag = (boolean) scopeCode[4];
+			boolean scopeCaptFlag = (boolean) scopeCode[4];
+			boolean scopeSpecFlag = (boolean) scopeCode[5];
 
 			newRow = row;
 			newCol = column;
@@ -241,7 +250,7 @@ public class Board {
 				}
 				else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
 				{
-					scopePossible[newRow][newCol] = true;
+					scopePossible[newRow][newCol] = scopeCaptFlag;
 					break;
 				}
 				//break if the motion isn't continous (this way the loop only runs once)
@@ -257,12 +266,40 @@ public class Board {
 		return scopePossible;
 	}
 
+
+	public ArrayList<Integer[]> getAllWhoReach (int row, int column)
+	{
+		ArrayList<Integer[]> reachList = new ArrayList<Integer[]>();
+		String color = flipColor(getPieceColor(row, column));
+
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((!(isEmpty(x,y))) && (getPieceColor(x, y).equals(color)) && (getScope(x,y)[row][column] == true) ) {
+					reachList.add(new Integer[]{x,y});
+				}
+			}
+		}
+		return reachList;
+	}
+
 	// for use in determining check and checkmate
 	public boolean[][] getColorScope(String color) {
 		boolean[][] colorScope = new boolean[8][8];
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				if ((!(isEmpty(x,y))) && (getPieceColor(x, y).equals(color))) {
+					incorporateScope(x, y, colorScope);
+				}
+			}
+		}
+		return colorScope;
+	}
+
+	public boolean[][] getColorScopeWithout(String color, int row, int column) {
+		boolean[][] colorScope = new boolean[8][8];
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((!(isEmpty(x,y))) && (!((x == row) && (y == column))) && (getPieceColor(x, y).equals(color))) {
 					incorporateScope(x, y, colorScope);
 				}
 			}
@@ -304,6 +341,84 @@ public class Board {
 		return cor;
 	}
 
+	public boolean isNotInterupt(int row1, int col1, int row2, int col2)
+	{
+
+		if (isOut(row1, col1)||isOut(row2, col2)||isEmpty(row1, col1)||isEmpty(row2, col2))
+		{
+			return false;
+		}
+		boolean[][] enemyScope = getColorScopeWithout(getPieceColor(row2, col2), row2, col2);
+		//System.out.println(printer(enemyScope));
+
+		//gets the piece and its color
+		Piece pieceToUse = getPiece(row1, col1);
+		String pieceColor = pieceToUse.getColor();
+
+		//refreshes the piece's cache
+		pieceToUse.setSnapshot(genSnapshot(row1, col1), row1, col1);
+		pieceToUse.refreshCache();
+
+		///gets the cache, so this method can access it
+		ArrayList<Object[]> scopeCache = pieceToUse.getCache();
+
+		//setup location variables for square ahead
+		int newRow, newCol;
+
+		//iterates through every code in the cache
+		for (int i = 0; i < scopeCache.size(); i++)
+		{
+			Object[] scopeCode = scopeCache.get(i);
+			//relevant code data
+			int scopeXChange = (int) scopeCode[0];
+			int scopeYChange = (int) scopeCode[1];
+			boolean scopeContFlag = (boolean) scopeCode[2];
+			boolean scopeJumpFlag = (boolean) scopeCode[3];
+			boolean scopeCaptFlag = (boolean) scopeCode[4];
+			boolean scopeSpecFlag = (boolean) scopeCode[5];
+
+			newRow = row1;
+			newCol = col1;
+			//loop only runs if certain conditions are met (i.e. when the spot ahead isn't out of bounds or when SpecFlag is true, which because of refreshing the cache is accurate)
+			//loop sees if new potential places are valid, and mark them as true if they are
+			while (scopeSpecFlag && (!(isOut(newRow - scopeYChange, newCol + scopeXChange))))
+			{
+				newRow -= scopeYChange;
+				newCol += scopeXChange;
+
+				if ((newRow == row2) && (newCol == col2))
+				{
+					return true;
+				}
+				if (enemyScope[newRow][newCol] == true)
+				{
+					break;
+				}
+				//break when you hit a piece (either enemy or friendly)
+				if (isEmpty(newRow, newCol)) {}
+				else if ((pieceColor.equals(getPieceColor(newRow, newCol))))
+				{
+					break;
+				}
+				else if (!(pieceColor.equals(getPieceColor(newRow, newCol))))
+				{
+					break;
+				}
+				//break if the motion isn't continous (this way the loop only runs once)
+				if (scopeContFlag == false)
+				{
+					break;
+				}
+
+			} 
+		}
+				
+		//return array of trues/falses about where the piece can land
+		return false;
+
+	}
+
+
 	// check and checkmate functions, we check to see if color1 is checked
 	public boolean isChecked(String color1,  String color2) 
 	{
@@ -321,6 +436,7 @@ public class Board {
 
 		int[] corking = getKingCor(color1);
 		boolean[][] scopeKing = getScope(corking[0], corking[1]);
+		boolean[][] scopeGood = getColorScope(color1);
 		boolean[][] scopeOther = getColorScope(color2);
 
 		int[] posrow = {corking[0] - 1 , corking[0], corking[0] + 1};
@@ -330,14 +446,25 @@ public class Board {
 		{
 			for (int c = 0; c <= 2; c++)
 			{
-				boolean sKing = scopeKing[posrow[r]][poscol[c]];
-				boolean sOther = scopeOther[posrow[r]][poscol[c]];
-				if ((!(isOut(posrow[r], poscol[c]))) && (sKing == true) && (sOther == false))
+				int x = posrow[r];
+				int y = posrow[c];
+				boolean sKing = scopeKing[x][y];
+				boolean sOther = scopeOther[x][y];
+				if ((!(isOut(x,y))) && (sKing == true) && (sOther == false))
 				{
 					return false;
 				}
 			}
 		}
+
+		ArrayList<Integer[]> attackers = getAllWhoReach(corking[0], corking[1]);
+		for (int i = 0; i < attackers.size() ; i++)
+		{
+			if ((!(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]))) && (scopeGood[attackers.get(i)[0]][attackers.get(i)[0]] == true))
+				return false;
+		}		
+
+
 		return true;
 	}				
 	
@@ -376,6 +503,16 @@ public class Board {
 		return returnString;
 	}
 
+	public static String printer (ArrayList<Integer[]> arrayToPrint)
+	{
+		String returnString = "";
+		for (int i = 0; i < arrayToPrint.size(); i++)
+		{
+			returnString += "Pair " + (i + 1) + ": " + "(" + arrayToPrint.get(i)[0] + " , " + arrayToPrint.get(i)[1] + ")\n";
+		}
+		return returnString;
+	}
+
 	public String toString() {
 		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
@@ -393,4 +530,74 @@ public class Board {
 		retStr += "\n   ----------------- \n";
 		return retStr;
     	}
+
+    public static void main (String[] args)
+    {
+    			Board test = new Board("Black", "White");
+		System.out.println();
+		System.out.println("The Board for Scope Testing");
+		System.out.println();
+		System.out.println("Note: uppercase = White");
+		System.out.println("      lowercase = Black");
+		System.out.println(test);
+
+		System.out.println("Testing: getScope(3,4) - Black Rook");
+		System.out.println(printer(test.getScope(3,4)));
+		System.out.println("Testing: getScope(5,6) - White Bishop");
+		System.out.println(printer(test.getScope(5,6)));
+		System.out.println("Testing: getScope(4,4) - Black Queen");
+		System.out.println(printer(test.getScope(4,4)));
+		System.out.println("Testing: getScope(0,1) - Black Knight");
+		System.out.println(printer(test.getScope(0,1)));
+		System.out.println("Testing: getScope(2,2) - White King");
+		System.out.println(printer(test.getScope(2,2)));
+		System.out.println("Testing: getScope(5,5) - White Pawn");
+		System.out.println(printer(test.getScope(5,5)));
+		System.out.println("Testing: getScope(6,3) - White Pawn");
+		System.out.println(printer(test.getScope(6,3)));
+		System.out.println("Testing: getScope(2,6) - Empty Square");
+		System.out.println(printer(test.getScope(2,6)));
+		System.out.println("The Board for Scope Testing");
+		System.out.println(test);
+		System.out.println("Testing: getColorScope() - White");
+		System.out.println(printer(test.getColorScope("White")));
+		System.out.println("Testing: getColorScope() - Black");
+		System.out.println(printer(test.getColorScope("Black")));
+		System.out.println("Testing: isCheck() - White");
+		System.out.println(test.isChecked("White", "Black"));
+		System.out.println("Testing: isCheck() - Black");
+		System.out.println(test.isChecked("Black", "White"));
+		System.out.println("Testing: isCheckMated() - White");
+		System.out.println(test.isCheckMated("White", "Black"));
+		System.out.println("Testing: isCheckMated() - Black");
+		System.out.println(test.isCheckMated("Black", "White"));
+
+		System.out.println("Testing: isNotInterupt() - (4,4) to (2,2)");
+		System.out.println(test.isNotInterupt(4, 4, 2, 2));
+		System.out.println("Testing: isNotInterupt() - (1,1) to (3,1)");
+		System.out.println(test.isNotInterupt(1, 1, 3, 1));
+		System.out.println("Testing: isNotInterupt() - (1,0) to (3,0)");
+		System.out.println(test.isNotInterupt(1, 0, 3, 0));
+		System.out.println("Testing: isNotInterupt() - (3,4) to (3,3)");
+		System.out.println(test.isNotInterupt(3, 4, 3, 3));
+		System.out.println("Testing: isNotInterupt() - (5,6) to (3,4)");
+		System.out.println(test.isNotInterupt(5, 6, 3, 4));
+		System.out.println("Testing: isNotInterupt() - (4,6) to (2,4)");
+		System.out.println(test.isNotInterupt(4, 6, 2, 4));
+
+		
+		System.out.println("Testing: getAllWhoReach() - (2,4)");
+		System.out.println(printer(test.getAllWhoReach(2, 4)));
+
+		System.out.println("Testing: getAllWhoReach() - (2,2)");
+		System.out.println(printer(test.getAllWhoReach(2, 2)));
+
+		System.out.println("Testing: getAllWhoReach() - (5,5)");
+		System.out.println(printer(test.getAllWhoReach(5, 5)));
+
+		System.out.println("Testing: getAllWhoReach() - (1,2)");
+		System.out.println(printer(test.getAllWhoReach(1, 2)));
+
+
+    }
 }

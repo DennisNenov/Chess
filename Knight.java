@@ -11,14 +11,14 @@ public class Knight extends Piece {
 	public Knight (String color, String color1, String color2) {
 		super(color, color1, color2);
 		_scopeCache = new ArrayList<Object[]>();
-		_scopeCache.add(new Object[]{2,1,false,true,true});
-		_scopeCache.add(new Object[]{1,2,false,true,true});
-		_scopeCache.add(new Object[]{2,-1,false,true,true});
-		_scopeCache.add(new Object[]{1,-2,false,true,true});
-		_scopeCache.add(new Object[]{-2,1,false,true,true});
-		_scopeCache.add(new Object[]{-1,2,false,true,true});
-		_scopeCache.add(new Object[]{-2,-1,false,true,true});
-		_scopeCache.add(new Object[]{-1,-2,false,true,true});
+		_scopeCache.add(new Object[]{2,1,false,true, true, true});
+		_scopeCache.add(new Object[]{1,2,false,true, true, true});
+		_scopeCache.add(new Object[]{2,-1,false,true, true, true});
+		_scopeCache.add(new Object[]{1,-2,false,true, true, true});
+		_scopeCache.add(new Object[]{-2,1,false,true,true, true});
+		_scopeCache.add(new Object[]{-1,2,false,true,true, true});
+		_scopeCache.add(new Object[]{-2,-1,false,true, true, true});
+		_scopeCache.add(new Object[]{-1,-2,false,true, true, true});
 	}
 
 	public void refreshCache () {};

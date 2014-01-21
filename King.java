@@ -11,14 +11,14 @@ public class King extends Piece {
 	public King (String color, String color1, String color2 ) {
 		super(color, color1, color2);
 		_scopeCache = new ArrayList<Object[]>();
-		_scopeCache.add(new Object[]{-1,-1,false,false,true});
-		_scopeCache.add(new Object[]{-1,0,false,false,true});
-		_scopeCache.add(new Object[]{-1,1,false,false,true});
-		_scopeCache.add(new Object[]{0,-1,false,false,true});
-		_scopeCache.add(new Object[]{0,1,false,false,true});
-		_scopeCache.add(new Object[]{1,-1,false,false,true});
-		_scopeCache.add(new Object[]{1,0,false,false,true});
-		_scopeCache.add(new Object[]{1,1,false,false,true});
+		_scopeCache.add(new Object[]{-1,-1,false,false,true,true});
+		_scopeCache.add(new Object[]{-1,0,false,false,true,true});
+		_scopeCache.add(new Object[]{-1,1,false,false,true,true});
+		_scopeCache.add(new Object[]{0,-1,false,false,true,true});
+		_scopeCache.add(new Object[]{0,1,false,false,true,true});
+		_scopeCache.add(new Object[]{1,-1,false,false,true,true});
+		_scopeCache.add(new Object[]{1,0,false,false,true,true});
+		_scopeCache.add(new Object[]{1,1,false,false,true,true});
 	}
 
 	public void refreshCache () {};
