@@ -14,8 +14,11 @@ public class Chess implements ActionListener {
 	private Board _board;	
 	private Player _player1;
 	private Player _player2;
-	private JPanel panel;
+	private JFrame _frame;
+	private JPanel _panel;
+	private GridLayout _grid;
 	private JButton[][] _buttonBoard;
+	private int _turn;
 
 	// default constructor
 	public Chess() {
@@ -65,7 +68,7 @@ public class Chess implements ActionListener {
 			}		
 		}
 		_board = new Board(_player1.getColor(), _player2.getColor());
-		setupGUI();
+		updateGUI();
 	}
 
 	// accessor method
@@ -75,28 +78,30 @@ public class Chess implements ActionListener {
 
 	// turns
 	public void run() {
-		int turns = 0;
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor() + "\n");
 		System.out.println(_board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
-			if ((turns % 2) == 0) {
+			if (_turn == 0) {
 				if (_board.isChecked(_player1.getColor(), _player2.getColor()))
 					System.out.println(_player1.getColor() + ", you are checked. Your turn.");
 				else
 					System.out.println(_player1.getColor() + ", your turn.");
 				_player1.movePiece(_board);
 				System.out.println(_board);
+			_turn++;
+			updateGUI();
 			}
-			else {
+			if (_turn == 1) {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor()))
 					System.out.println(_player2.getColor() + ", you are checked.");
 				else
 					System.out.println(_player2.getColor() + ", your turn.");
 				_player2.movePiece(_board);
+			_turn--;
+			updateGUI();
 			}
-			turns++;
 		}
 
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))
@@ -107,13 +112,13 @@ public class Chess implements ActionListener {
 
 	// GUI
 
-	public void setupGUI() {
+	public void updateGUI() {
 
-		JFrame frame = new JFrame();
-		GridLayout grid = new GridLayout(8,8);
-		grid.setVgap(1);
-		grid.setHgap(2);
-		panel = new JPanel(grid);
+		_frame = new JFrame();
+		_grid = new GridLayout(8,8);
+		_grid.setVgap(1);
+		_grid.setHgap(2);
+		_panel = new JPanel(_grid);
 
 		_buttonBoard = new JButton[8][8];
 		for (int x = 0; x < 8; x++) {
@@ -123,20 +128,21 @@ public class Chess implements ActionListener {
 			}
 		}		
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				panel.add(_buttonBoard[x][y]);
+				_panel.add(_buttonBoard[x][y]);
 			}
 		}
 
-		panel.setBackground(Color.darkGray);	
-		frame.getContentPane().add(BorderLayout.CENTER, panel);
-		frame.setSize(640,640);
-		frame.setVisible(true);
+		_panel.setBackground(Color.darkGray);	
+		_frame.getContentPane().add(BorderLayout.CENTER, _panel);
+		_frame.setSize(640,640);
+		_frame.setVisible(true);
 	}
+		
 
 	public void actionPerformed(ActionEvent event) {
 		for (int x = 0; x < 8; x++) {

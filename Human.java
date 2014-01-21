@@ -14,6 +14,7 @@ public class Human extends Player {
 	}
 
 	// methods
+
 	public void movePiece(Board board) {
 		int[] coordinates = selectPiece(board);
 		selectMove(coordinates, board);
@@ -71,5 +72,6 @@ public class Human extends Player {
 			System.out.println("Error: invalid choice - piece is wrong color.");
 			System.out.println("please choose a " + _color + " piece\n");
 		}
-	}				
+	}		
+	
 }
