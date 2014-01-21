@@ -20,7 +20,7 @@ public class Board
 
 		// initializes 2d array of Pieces
 		_board = new Piece[8][8];
-		/*
+		
 		// instantiates the back row of pieces with the color specified in color1
 		_board[0][0] = new Rook(color1, color1, color2);
 		_board[0][1] = new Knight(color1, color1, color2);
@@ -66,15 +66,15 @@ public class Board
 		for (int x = 0; x < 8; x++) {
 			_board[6][x] = new Pawn(color2, color1, color2);
 		}
-	*/
+	
 		//test for checkmate
-		
+		/*
 		_board[3][3] = new King(color1, color1, color2);
 		_board[2][3] = new Queen(color2, color1, color2);
 		_board[4][3] = new Queen(color2, color1, color2);
 		_board[3][4] = new Queen(color2, color1, color2);
 		_board[3][2] = new Queen(color2, color1, color2);
-		
+		*/
 	}
 
 	// methods
