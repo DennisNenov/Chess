@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class Computer extends Player {
 
-	public Computer() {
-		super();
+	// constructor
+	public Computer(String color) {
+		super(color);
 	}
 
 	public void movePiece(Board board) {

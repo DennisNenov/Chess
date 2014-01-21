@@ -12,9 +12,8 @@ public abstract class Player {
 	protected String _color;
 
 	// default constructor
-	public Player() {
-		System.out.print("choose your team color: ");
-		_color = Keyboard.readString();
+	public Player(String color) {
+		_color = color;
 	}
 
 	// accessor methods

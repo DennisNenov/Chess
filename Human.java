@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Human extends Player {
 
-	// default constructor
-	public Human() {
-		super();
+	// constructor
+	public Human(String color) {
+		super(color);
 	}
 
 	// methods

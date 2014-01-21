@@ -118,6 +118,15 @@ public class Board
 		return _board[row][column];
 	}
 
+	public String getPieceString(int row, int column) {
+		if (isEmpty(row, column)) {
+			return " ";
+		}
+		else {
+			return _board[row][column].toString();
+		}
+	}
+
 	public String getPieceColor(int row, int column) 
 	{
 		return _board[row][column].getColor();
