@@ -19,6 +19,29 @@ public class Bishop extends Piece {
 
 	public void refreshCache () {};
 
+	public Piece copyPiece ()
+	{
+		Bishop newPiece = new Bishop(this._color, this._color1, this._color2);
+		String[][] newSnapshot = new String[5][5];
+		for (int r = 0; r < this._snapshot.length; r++)
+		{
+			for (int c = 0; c < this._snapshot.length; c++)
+			{
+				newSnapshot[r][c] = this._snapshot[r][c];
+			}
+		}
+		newPiece._snapshot = newSnapshot;
+		ArrayList<Object[]> newCache = new ArrayList<Object[]>();
+		for (int x = 0; x < newPiece._scopeCache.size(); x++)
+		{
+			newCache.add(this._scopeCache.get(x));
+		}
+		newPiece._scopeCache = newCache;
+		newPiece._rowvalue = this._rowvalue;
+		newPiece._columnvalue = this._columnvalue;
+		return newPiece;
+	}
+
 	// toString
 	public String toString() {
 		if (_color.equals(_color2)) {

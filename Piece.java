@@ -37,6 +37,8 @@ public abstract class Piece {
 		
 	}
 
+	public abstract Piece copyPiece ();
+
 	public ArrayList<Object[]> getCache()
 	{
 		return _scopeCache;

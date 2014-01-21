@@ -40,6 +40,29 @@ public class Pawn extends Piece {
 		_scopeCache.set(6, new Object[]{1,1,false,false,true,( (_color.equals(_color2)) && ((_snapshot[1][3]).equals(_color1)))});
 		_scopeCache.set(7, new Object[]{1,-1,false,false,true,( (_color.equals(_color1)) && ((_snapshot[3][3]).equals(_color2)))});
 	}
+
+	public Piece copyPiece ()
+	{
+		Pawn newPiece = new Pawn(this._color, this._color1, this._color2);
+		String[][] newSnapshot = new String[5][5];
+		for (int r = 0; r < this._snapshot.length; r++)
+		{
+			for (int c = 0; c < this._snapshot.length; c++)
+			{
+				newSnapshot[r][c] = this._snapshot[r][c];
+			}
+		}
+		newPiece._snapshot = newSnapshot;
+		ArrayList<Object[]> newCache = new ArrayList<Object[]>();
+		for (int x = 0; x < newPiece._scopeCache.size(); x++)
+		{
+			newCache.add(this._scopeCache.get(x));
+		}
+		newPiece._scopeCache = newCache;
+		newPiece._rowvalue = this._rowvalue;
+		newPiece._columnvalue = this._columnvalue;
+		return newPiece;
+	}
 			
 
 	// toString

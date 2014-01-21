@@ -20,7 +20,7 @@ public class Board
 
 		// initializes 2d array of Pieces
 		_board = new Piece[8][8];
-
+		/*
 		// instantiates the back row of pieces with the color specified in color1
 		_board[0][0] = new Rook(color1, color1, color2);
 		_board[0][1] = new Knight(color1, color1, color2);
@@ -37,13 +37,13 @@ public class Board
 		}
 
 		
-		_board[2][4] = new Rook(color1, color1, color2);
-		_board[4][6] = new Bishop(color2, color1, color2);
+		//_board[2][4] = new Rook(color1, color1, color2);
+		//_board[4][6] = new Bishop(color2, color1, color2);
 		//_board[3][4] = new Rook(color1, color1, color2);
 		//_board[5][6] = new Bishop(color2, color1, color2);
 		//_board[4][4] = new Queen(color1, color1, color2);
-		_board[2][2] = new King(color2, color1, color2);
-		_board[5][5] = new Pawn(color2, color1, color2);
+		//_board[2][2] = new King(color2, color1, color2);
+		//_board[5][5] = new Pawn(color2, color1, color2);
 		
 		//check test
 		//_board[3][2] = new King(color2, color1, color2);
@@ -57,7 +57,7 @@ public class Board
 		_board[7][1] = new Knight(color2, color1, color2);
 		_board[7][2] = new Bishop(color2, color1, color2);;
 		_board[7][3] = new Queen(color2, color1, color2);
-		//_board[7][4] = new King(color2, color1, color2);
+		_board[7][4] = new King(color2, color1, color2);
 		_board[7][5] = new Bishop(color2, color1, color2);
 		_board[7][6] = new Knight(color2, color1, color2);
 		_board[7][7] = new Rook(color2, color1, color2);
@@ -66,19 +66,43 @@ public class Board
 		for (int x = 0; x < 8; x++) {
 			_board[6][x] = new Pawn(color2, color1, color2);
 		}
-
+	*/
 		//test for checkmate
-		/*
+		
 		_board[3][3] = new King(color1, color1, color2);
 		_board[2][3] = new Queen(color2, color1, color2);
 		_board[4][3] = new Queen(color2, color1, color2);
 		_board[3][4] = new Queen(color2, color1, color2);
 		_board[3][2] = new Queen(color2, color1, color2);
-		*/
+		
 	}
 
 	// methods
 	//checks if the pair is out of bounds
+
+	public static Board copyBoard( Board toCopy)
+	{
+		Board newBoard = new Board(toCopy._color1, toCopy._color2);
+		newBoard._color1 = toCopy._color1;
+		newBoard._color2 = toCopy._color2;
+		for (int r = 0; r <= 7; r++)
+		{
+			for (int c = 0; c <= 7; c++)
+			{
+				if (toCopy._board[r][c] == null)
+				{
+					newBoard._board[r][c] = null;
+				}
+				else
+				{
+					newBoard._board[r][c] = toCopy._board[r][c].copyPiece();
+				}
+			}
+
+		}
+		return newBoard;
+	}
+
 	public boolean isOut (int row, int column)
 	{
 		return (row > 7 || row < 0 || column > 7 || column < 0);
@@ -436,7 +460,6 @@ public class Board
 
 		int[] corking = getKingCor(color1);
 		boolean[][] scopeKing = getScope(corking[0], corking[1]);
-		boolean[][] scopeGood = getColorScope(color1);
 		boolean[][] scopeOther = getColorScope(color2);
 
 		int[] posrow = {corking[0] - 1 , corking[0], corking[0] + 1};
@@ -450,12 +473,24 @@ public class Board
 				int y = posrow[c];
 				boolean sKing = scopeKing[x][y];
 				boolean sOther = scopeOther[x][y];
-				if ((!(isOut(x,y))) && (sKing == true) && (sOther == false))
+				if ((!(isOut(x,y))) && (sKing == true) && (isEmpty(x,y)) && (sOther == false))
 				{
 					return false;
 				}
+				if ((!(isOut(x,y))) && (!isEmpty(x,y)) && (sKing == true))
+				{
+					Board newBoard = copyBoard(this);
+					newBoard._board[x][y] = getPiece(corking[0],corking[1]);
+					newBoard._board[corking[0]][corking[1]] = null;
+					if (newBoard.getColorScope(color2)[x][y] == false)
+					{
+						return false;
+					}
+				}
 			}
 		}
+
+		boolean[][] scopeGood = getColorScopeWithout(color1, corking[0], corking[1]);
 
 		ArrayList<Integer[]> attackers = getAllWhoReach(corking[0], corking[1]);
 		for (int i = 0; i < attackers.size() ; i++)
@@ -463,7 +498,6 @@ public class Board
 			if ((!(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]))) && (scopeGood[attackers.get(i)[0]][attackers.get(i)[0]] == true))
 				return false;
 		}		
-
 
 		return true;
 	}				
