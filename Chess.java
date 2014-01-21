@@ -14,6 +14,7 @@ public class Chess {
 	private Board _board;	
 	private Player _player1;
 	private Player _player2;
+	private JPanel panel;
 	private JButton[][] _buttonBoard;
 
 	// default constructor
@@ -108,8 +109,10 @@ public class Chess {
 	public void setupGUI() {
 
 		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.darkGray);
+		GridLayout grid = new GridLayout(8,8);
+		grid.setVgap(1);
+		grid.setHgap(2);
+		panel = new JPanel(grid);
 
 		_buttonBoard = new JButton[8][8];
 		for (int x = 0; x < 8; x++) {
@@ -120,12 +123,14 @@ public class Chess {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				panel.add(_buttonBoard[x][y]);
 			}
 		}
 
+		panel.setBackground(Color.darkGray);	
 		frame.getContentPane().add(BorderLayout.CENTER, panel);
 		frame.setSize(640,640);
 		frame.setVisible(true);
