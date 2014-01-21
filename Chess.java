@@ -4,6 +4,9 @@
 // Chess.java driver file.
 
 import cs1.Keyboard;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Chess {
 
@@ -11,6 +14,7 @@ public class Chess {
 	private Board _board;	
 	private Player _player1;
 	private Player _player2;
+	private JButton[][] _buttonBoard;
 
 	// default constructor
 	public Chess() {
@@ -20,6 +24,7 @@ public class Chess {
 		System.out.println("\nPlayer Two");
 		_player2 = new Computer();
 		_board = new Board(_player1.getColor(), _player2.getColor());
+		setupGUI();
 	}
 
 	// accessor method
@@ -57,6 +62,45 @@ public class Chess {
 		else if ((_board.isCheckMated(_player2.getColor(), _player1.getColor())))
 			System.out.println(_player1.getColor() + ", you have won.");
 	}
+
+	// GUI
+
+	public void setupGUI() {
+
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.darkGray);
+
+		_buttonBoard = new JButton[8][8];
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				_buttonBoard[x][y] = new JButton(_board.getPieceString(x,y));
+			}
+		}		
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				panel.add(_buttonBoard[x][y]);
+			}
+		}
+
+		frame.getContentPane().add(BorderLayout.CENTER, panel);
+		frame.setSize(640,640);
+		frame.setVisible(true);
+	}
+
+
+		
+
+	
+
+
+
+
+
+
 
 	public static void main(String [] args) {
 		Chess chess = new Chess();
