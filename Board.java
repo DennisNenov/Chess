@@ -482,16 +482,12 @@ public class Board
 				int y = poscol[c];
 				System.out.println("x: " + x + "y: " + y);
 				//System.out.println(((!(isOut(x,y))) + " " + scopeKing[x][y] + " " + (isEmpty(x,y)) + (scopeOther[x][y])));
-				if ((!(isOut(x,y))) && (scopeKing[x][y] == true) && (isEmpty(x,y)) && (scopeOther[x][y] == false))
-				{
-					return false;
-				}
-				if ((!(isOut(x,y))) && (!isEmpty(x,y)) && (scopeKing[x][y] == true))
+				if ((!(isOut(x,y))) && (scopeKing[x][y] == true))
 				{
 					Board newBoard = copyBoard(this);
-					System.out.println("new board:\n" + newBoard);
 					newBoard._board[x][y] = getPiece(corking[0],corking[1]);
 					newBoard._board[corking[0]][corking[1]] = null;
+					System.out.println("new board:\n" + newBoard);
 					if (newBoard.getColorScope(color2)[x][y] == false)
 					{
 						return false;
@@ -505,11 +501,13 @@ public class Board
 		ArrayList<Integer[]> attackers = getAllWhoReach(corking[0], corking[1]);
 		for (int i = 0; i < attackers.size() ; i++)
 		{
+			//System.out.println(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]));
 			if ((!(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]))) && (scopeGood[attackers.get(i)[0]][attackers.get(i)[0]] == true))
 				return false;
 		}		
 
 		System.out.println("\ncolor: " + color1);
+		System.out.println(this);
 		System.out.println("\nking cor: " + corking[0] + " and " + corking[1]);
 		System.out.println("scopeKing: \n" + printer(scopeKing));
 		System.out.println("scopeOther: \n" + printer(scopeOther));
