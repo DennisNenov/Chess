@@ -257,12 +257,12 @@ public class Board
 		{
 			Object[] scopeCode = scopeCache.get(i);
 			//relevant code data
-			int scopeXChange = (int) scopeCode[0];
-			int scopeYChange = (int) scopeCode[1];
-			boolean scopeContFlag = (boolean) scopeCode[2];
-			boolean scopeJumpFlag = (boolean) scopeCode[3];
-			boolean scopeCaptFlag = (boolean) scopeCode[4];
-			boolean scopeSpecFlag = (boolean) scopeCode[5];
+			Integer scopeXChange = (int) scopeCode[0];
+			Integer scopeYChange = (int) scopeCode[1];
+			Boolean scopeContFlag = (boolean) scopeCode[2];
+			Boolean scopeJumpFlag = (boolean) scopeCode[3];
+			Boolean scopeCaptFlag = (boolean) scopeCode[4];
+			Boolean scopeSpecFlag = (boolean) scopeCode[5];
 
 			newRow = row;
 			newCol = column;
@@ -404,12 +404,13 @@ public class Board
 		{
 			Object[] scopeCode = scopeCache.get(i);
 			//relevant code data
-			int scopeXChange = (int) scopeCode[0];
-			int scopeYChange = (int) scopeCode[1];
-			boolean scopeContFlag = (boolean) scopeCode[2];
-			boolean scopeJumpFlag = (boolean) scopeCode[3];
-			boolean scopeCaptFlag = (boolean) scopeCode[4];
-			boolean scopeSpecFlag = (boolean) scopeCode[5];
+			Integer scopeXChange = (int) scopeCode[0];
+			Integer scopeYChange = (int) scopeCode[1];
+			Boolean scopeContFlag = (boolean) scopeCode[2];
+			Boolean scopeJumpFlag = (boolean) scopeCode[3];
+			Boolean scopeCaptFlag = (boolean) scopeCode[4];
+			Boolean scopeSpecFlag = (boolean) scopeCode[5];
+
 
 			newRow = row1;
 			newCol = col1;
@@ -460,14 +461,8 @@ public class Board
 		return getColorScope(color2)[corking[0]][corking[1]];
 	}
 
-
-	public boolean isCheckMated(String color1, String color2) 
+	public boolean isImpossibleToMove (String color1, String color2)
 	{
-		if (!(isChecked(color1, color2))) 
-		{
-			return false;
-		}
-
 		int[] corking = getKingCor(color1);
 		boolean[][] scopeKing = getScope(corking[0], corking[1]);
 		boolean[][] scopeOther = getColorScope(color2);
@@ -515,6 +510,12 @@ public class Board
 		System.out.println("scopeGood: \n" + printer(scopeGood));
 
 		return true;
+	}
+
+
+	public boolean isCheckMated(String color1, String color2) 
+	{
+			return isChecked(color1, color2) & isImpossibleToMove(color1, color2);
 	}				
 	
 	//prints arrays (temp testing function)
