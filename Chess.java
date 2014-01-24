@@ -19,7 +19,7 @@ public class Chess implements ActionListener {
 
 	// default constructor
 	public Chess() {
-		System.out.println("\nChess by Nicholas Romanoff & Dennis Nennov\n");
+		System.out.println("\nChess by Nicholas Romanoff & Dennis Nenov\n");
 		System.out.println("\nSelect from the game modes:");
 		System.out.println("\n1 - Human vs. Human");
 		System.out.println("2 - Human vs. Computer");
@@ -78,16 +78,17 @@ public class Chess implements ActionListener {
 		int turns = 0;
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor() + "\n");
-		System.out.println(_board);
+		System.out.println("Board before move:\n" + _board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
+			System.out.println("Board before move:\n" + _board);
 			if ((turns % 2) == 0) {
 				if (_board.isChecked(_player1.getColor(), _player2.getColor()))
 					System.out.println(_player1.getColor() + ", you are checked. Your turn.");
 				else
 					System.out.println(_player1.getColor() + ", your turn.");
 				_player1.movePiece(_board);
-				System.out.println(_board);
+				System.out.println("Board after move:\n" + _board);
 			}
 			else {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor()))

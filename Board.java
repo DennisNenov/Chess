@@ -11,6 +11,8 @@ public class Board
 	// instance variables
 	private Piece[][] _board;
 	private String _color1, _color2;
+	private int moveCounter;
+
 
 	// default constructor
 	public Board(String color1, String color2) {
@@ -79,6 +81,18 @@ public class Board
 
 	// methods
 	//checks if the pair is out of bounds
+	public void setXY (int x, int y, Object value)
+	{
+		if (value == null)
+		{
+			_board[x][y] = null;	
+		}
+		else
+		{
+			_board[x][y] = (Piece) value;
+		}
+		 
+	}
 
 	public static Board copyBoard( Board toCopy)
 	{
@@ -137,7 +151,7 @@ public class Board
 		if (colorToFlip.equals(_color1))
 			return _color2;
 		else
-			return _color1;	
+			return _color1;
 	}
 
 
@@ -176,14 +190,21 @@ public class Board
 		return (getScope(x1,y1)[x2][y2]);
 	}
 
-	public void executeMove(int[] move) {
+	public void executeMove(int[] move, Player player) {
 		int x1 = move[0];
 		int y1 = move[1];
 		int x2 = move[2];
 		int y2 = move[3];
+		if ((getPiece(x2,y2) instanceof Piece) || (getPiece(x1,y1) instanceof Pawn))
+		{
+			player.resetCounter();
+		}
+		else
+		{
+			player.increaseCounter();
+		}
 		_board[x2][y2] = getPiece(x1,y1);
 		_board[x1][y1] = null;
-		System.out.println("\nMove complete.");
 	}
 
 	// -----------------------------------------------------------------------
@@ -304,6 +325,7 @@ public class Board
 	public ArrayList<Integer[]> getAllWhoReach (int row, int column)
 	{
 		ArrayList<Integer[]> reachList = new ArrayList<Integer[]>();
+		//System.out.println("row: " + row + "col: " + column);
 		String color = flipColor(getPieceColor(row, column));
 
 		for (int x = 0; x < 8; x++) {
@@ -453,11 +475,18 @@ public class Board
 
 	}
 
+	public boolean isForciblyTied()
+	{
+		return (isImpossibleToMove(color1, color2) || isImpossibleToMove(color2, color1));
+	}
+
+
 
 	// check and checkmate functions, we check to see if color1 is checked
 	public boolean isChecked(String color1,  String color2) 
 	{
 		int[] corking = getKingCor(color1);
+		//System.out.println(printer(getAllWhoReach(corking[0], corking[1])));
 		return getColorScope(color2)[corking[0]][corking[1]];
 	}
 
@@ -476,14 +505,14 @@ public class Board
 			{
 				int x = posrow[r];
 				int y = poscol[c];
-				System.out.println("x: " + x + "y: " + y);
+				//System.out.println("x: " + x + "y: " + y);
 				//System.out.println(((!(isOut(x,y))) + " " + scopeKing[x][y] + " " + (isEmpty(x,y)) + (scopeOther[x][y])));
 				if ((!(isOut(x,y))) && (scopeKing[x][y] == true))
 				{
 					Board newBoard = copyBoard(this);
 					newBoard._board[x][y] = getPiece(corking[0],corking[1]);
 					newBoard._board[corking[0]][corking[1]] = null;
-					System.out.println("new board:\n" + newBoard);
+					//System.out.println("new board:\n" + newBoard);
 					if (newBoard.getColorScope(color2)[x][y] == false)
 					{
 						return false;
@@ -501,14 +530,14 @@ public class Board
 			if ((!(isNotInterupt(attackers.get(i)[0], attackers.get(i)[1], corking[0], corking[1]))) && (scopeGood[attackers.get(i)[0]][attackers.get(i)[0]] == true))
 				return false;
 		}		
-
+		/*
 		System.out.println("\ncolor: " + color1);
 		System.out.println(this);
 		System.out.println("\nking cor: " + corking[0] + " and " + corking[1]);
 		System.out.println("scopeKing: \n" + printer(scopeKing));
 		System.out.println("scopeOther: \n" + printer(scopeOther));
 		System.out.println("scopeGood: \n" + printer(scopeGood));
-
+		*/
 		return true;
 	}
 

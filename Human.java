@@ -40,7 +40,7 @@ public class Human extends Player {
 			System.out.println("Type coordinates of piece destination [0,7] :");
 			int[] move = createMove(coordinates, inputCoordinates());
 			if (board.isValidMove(move)) {
-				board.executeMove(move);
+				board.executeMove(move, this);
 				break;
 			}
 			feedback(move, board);
