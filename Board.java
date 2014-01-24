@@ -475,12 +475,10 @@ public class Board
 
 	}
 
-	public boolean isForciblyTied()
+	public boolean isTied(Player player1, Player player2)
 	{
-		return (isImpossibleToMove(color1, color2) || isImpossibleToMove(color2, color1));
+		return (player1.getDraw() || player2.getDraw());
 	}
-
-
 
 	// check and checkmate functions, we check to see if color1 is checked
 	public boolean isChecked(String color1,  String color2) 

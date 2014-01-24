@@ -73,14 +73,17 @@ public class Chess implements ActionListener {
 		return _board;
 	}
 
+	public boolean gameToRun()
+	{
+		return (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || (_board.isCheckMated(_player2.getColor(), _player1.getColor())) || (_board.isTied(_player1, _player2))));
+	}
 	// turns
 	public void run() {
 		int turns = 0;
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor() + "\n");
 		System.out.println("Board before move:\n" + _board);
-		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
-		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
+		while (gameToRun()) {
 			System.out.println("Board before move:\n" + _board);
 			if ((turns % 2) == 0) {
 				if (_board.isChecked(_player1.getColor(), _player2.getColor()))
@@ -104,6 +107,8 @@ public class Chess implements ActionListener {
 			System.out.println(_player2.getColor() + ", you have won.");
 		else if ((_board.isCheckMated(_player2.getColor(), _player1.getColor())))
 			System.out.println(_player1.getColor() + ", you have won.");
+		else if ((_board.isTied(_player1, _player2)))
+			System.out.println(_player1.getColor() + " and " + _player2.getColor() + ", you have both tied.");
 	}
 
 	// GUI
