@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 
 	// constructor
-	public Pawn (String color, String color1, String color2) 
+	public Pawn (String color, String color1, String color2, String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter) 
 	{
-		super(color, color1, color2);
+		super(color, color1, color2,  snapshotToEnter, rowvalueToEnter, columnvalueToEnter);
 		_scopeCache = new ArrayList<Object[]>();
 		_scopeCache.add(new Object[]{0,1,false,false, false, false});
 		_scopeCache.add(new Object[]{0,-1,false,false, false, false});
@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 
 	public Piece copyPiece ()
 	{
-		Pawn newPiece = new Pawn(this._color, this._color1, this._color2);
+		Pawn newPiece = new Pawn(this._color, this._color1, this._color2,  new String[5][5], this._rowvalue, this._columnvalue);
 		String[][] newSnapshot = new String[5][5];
 		for (int r = 0; r < this._snapshot.length; r++)
 		{

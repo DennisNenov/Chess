@@ -23,18 +23,18 @@ public class Board
 		_board = new Piece[8][8];
 		
 		// instantiates the back row of pieces with the color specified in color1
-		_board[0][0] = new Rook(color1, color1, color2);
-		_board[0][1] = new Knight(color1, color1, color2);
-		_board[0][2] = new Bishop(color1, color1, color2);
-		_board[0][3] = new Queen(color1, color1, color2);
-		_board[0][4] = new King(color1, color1, color2);
-		_board[0][5] = new Bishop(color1, color1, color2);
-		_board[0][6] = new Knight(color1, color1, color2);
-		_board[0][7] = new Rook(color1, color1, color2);
+		_board[0][0] = new Rook(color1, color1, color2, genSnapshot(0,0), 0, 0);
+		_board[0][1] = new Knight(color1, color1, color2, genSnapshot(0,1), 0, 1);
+		_board[0][2] = new Bishop(color1, color1, color2, genSnapshot(0,2), 0, 2);
+		_board[0][3] = new Queen(color1, color1, color2, genSnapshot(0,3), 0, 3);
+		_board[0][4] = new King(color1, color1, color2, genSnapshot(0,4), 0, 4);
+		_board[0][5] = new Bishop(color1, color1, color2, genSnapshot(0,5), 0, 5);
+		_board[0][6] = new Knight(color1, color1, color2, genSnapshot(0,6), 0, 6);
+		_board[0][7] = new Rook(color1, color1, color2, genSnapshot(0,7), 0, 7);
 
 		// instantiates the front row of pieces with the color specified in color1
 		for (int x = 0; x < 8; x++) {
-			_board[1][x] = new Pawn(color1, color1, color2);
+			_board[1][x] = new Pawn(color1, color1, color2, genSnapshot(1,x), 1, x);
 		}
 
 		
@@ -54,18 +54,18 @@ public class Board
 
 		
 		// instantiates the back row of pieces with the color specified in color2
-		_board[7][0] = new Rook(color2, color1, color2);
-		_board[7][1] = new Knight(color2, color1, color2);
-		_board[7][2] = new Bishop(color2, color1, color2);;
-		_board[7][3] = new Queen(color2, color1, color2);
-		_board[7][4] = new King(color2, color1, color2);
-		_board[7][5] = new Bishop(color2, color1, color2);
-		_board[7][6] = new Knight(color2, color1, color2);
-		_board[7][7] = new Rook(color2, color1, color2);
+		_board[7][0] = new Rook(color2, color1, color2, genSnapshot(7,0), 7, 0);
+		_board[7][1] = new Knight(color2, color1, color2, genSnapshot(7,1), 7, 1);
+		_board[7][2] = new Bishop(color2, color1, color2, genSnapshot(7,2), 7, 2);
+		_board[7][3] = new Queen(color2, color1, color2 , genSnapshot(7,3), 7, 3);
+		_board[7][4] = new King(color2, color1, color2,  genSnapshot(7,4), 7, 4);
+		_board[7][5] = new Bishop(color2, color1, color2, genSnapshot(7,5), 7, 5);
+		_board[7][6] = new Knight(color2, color1, color2, genSnapshot(7,7), 7, 6);
+		_board[7][7] = new Rook(color2, color1, color2, genSnapshot(7,7), 7, 7);
 
 		// instantiates the front row of pieces with the color specified in color2
 		for (int x = 0; x < 8; x++) {
-			_board[6][x] = new Pawn(color2, color1, color2);
+			_board[6][x] = new Pawn(color2, color1, color2, genSnapshot(6,x), 6, x);
 		}
 	
 		//test for checkmate
@@ -618,7 +618,7 @@ public class Board
 		String returnString = "";
 		for (int i = 0; i < arrayToPrint.size(); i++)
 		{
-			returnString += "Pair " + (i + 1) + ": " + "(" + arrayToPrint.get(i)[0] + " , " + arrayToPrint.get(i)[1] + ")\n";
+			returnString += "Pair " + (i + 1) + ": " + "(" + arrayToPrint.get(i)[0] + " , " + arrayToPrint.get(i)[1] + arrayToPrint.get(i)[2] + ")\n";
 		}
 		return returnString;
 	}

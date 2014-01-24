@@ -13,24 +13,27 @@ public abstract class Piece {
 	protected ArrayList<Object[]> _scopeCache;
 	protected String[][] _snapshot;
 	protected int _rowvalue, _columnvalue;
-	protected int moveCounter;
+	protected int _moveCounter;
 
-	public Piece (String color, String color1, String color2) 
+	public Piece (String color, String color1, String color2, String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter) 
 	{
 		_color = color;
 		_color1 = color1;
 		_color2 = color2;
-		moveCounter = 0;
+		_snapshot = snapshotToEnter;
+		_rowvalue = rowvalueToEnter;
+		_columnvalue = columnvalueToEnter;
+		_moveCounter = 0;
 	}
 
 	public int getCounter()
 	{
-		return moveCounter;
+		return _moveCounter;
 	}
 
 	public void increaseCounter()
 	{
-		moveCounter++;
+		_moveCounter++;
 	}
 
 	public String getColor() {

@@ -101,6 +101,9 @@ public class Chess implements ActionListener {
 				_player2.movePiece(_board);
 			}
 			System.out.println("Board after move:\n" + _board);
+			System.out.println("Testing pawn promotion: ");
+			System.out.println(Board.printer(Promotion.eventCheck(_board), 1));
+			Promotion.eventExecute(Promotion.eventCheck(_board), _board);
 			turns++;
 		}
 

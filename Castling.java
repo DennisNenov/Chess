@@ -80,6 +80,7 @@ public class Castling
 		}
 		return true;
 	}
+	//each code contains the color, followed by the side they can castle to (0 is kingside, 1 is queenside)
 
 	public static ArrayList<Object[]> eventCheck(Board board)
 	{

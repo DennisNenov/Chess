@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class King extends Piece {
 
 	// constructor
-	public King (String color, String color1, String color2 ) {
-		super(color, color1, color2);
+	public King (String color, String color1, String color2, String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter  ) {
+		super(color, color1, color2, snapshotToEnter, rowvalueToEnter, columnvalueToEnter);
 		_scopeCache = new ArrayList<Object[]>();
 		_scopeCache.add(new Object[]{-1,-1,false,false,true,true});
 		_scopeCache.add(new Object[]{-1,0,false,false,true,true});
@@ -25,7 +25,7 @@ public class King extends Piece {
 
 	public Piece copyPiece ()
 	{
-		King newPiece = new King(this._color, this._color1, this._color2);
+		King newPiece = new King(this._color, this._color1, this._color2,  new String[5][5], this._rowvalue, this._columnvalue);
 		String[][] newSnapshot = new String[5][5];
 		for (int r = 0; r < this._snapshot.length; r++)
 		{

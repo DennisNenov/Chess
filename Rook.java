@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class Rook extends Piece {
 
 	// constructor
-	public Rook (String color, String color1, String color2) 
+	public Rook (String color, String color1, String color2, String[][] snapshotToEnter, int rowvalueToEnter, int columnvalueToEnter) 
 	{
-		super(color, color1, color2);
+		super(color, color1, color2, snapshotToEnter, rowvalueToEnter, columnvalueToEnter);
 		_scopeCache = new ArrayList<Object[]>();
 		_scopeCache.add(new Object[]{1,0,true,false,true,true});
 		_scopeCache.add(new Object[]{-1,0,true,false,true,true});
@@ -21,7 +21,7 @@ public class Rook extends Piece {
 
 	public Piece copyPiece ()
 	{
-		Rook newPiece = new Rook(this._color, this._color1, this._color2);
+		Rook newPiece = new Rook(this._color, this._color1, this._color2, new String[5][5], this._rowvalue, this._columnvalue);
 		String[][] newSnapshot = new String[5][5];
 		for (int r = 0; r < this._snapshot.length; r++)
 		{
