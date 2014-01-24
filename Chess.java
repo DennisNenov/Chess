@@ -71,6 +71,8 @@ public class Chess implements ActionListener {
 				System.out.println("Try again: select a game mode.");
 			}	
 		}
+		_player1.setOpponent(_player2);
+		_player2.setOpponent(_player1);
 		while (true) {
 			System.out.println("\nSelect a method of gameplay:");
 			System.out.println("\n1 - Mouse: clicking in graphic window");
@@ -110,48 +112,37 @@ public class Chess implements ActionListener {
 	{
 		return (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || (_board.isCheckMated(_player2.getColor(), _player1.getColor())) || (_board.isTied(_player1, _player2))));
 	}
+
 	// turns
 	public void run() {
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor() + "\n");
-<<<<<<< HEAD
 		System.out.println(_board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
 			if (_turn == 1) {
-=======
-		System.out.println("Board before move:\n" + _board);
-		while (gameToRun()) {
-			System.out.println("Board before move:\n" + _board);
-			if ((turns % 2) == 0) {
->>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
-				if (_board.isChecked(_player1.getColor(), _player2.getColor()))
+				if (_board.isChecked(_player1.getColor(), _player2.getColor())){
 					System.out.println(_player1.getColor() + ", you are checked. Your turn.");
-				else
+				}
+				else {
 					System.out.println(_player1.getColor() + ", your turn.");
+				}
 				_player1.movePiece(_board);
-<<<<<<< HEAD
 				System.out.println(_board);
-			_turn++;
-			updateGUI();
-=======
-				
->>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
+				_turn++;
+				updateGUI();
 			}
 			if (_turn == 2) {
-				if (_board.isChecked(_player2.getColor(), _player1.getColor()))
+				if (_board.isChecked(_player2.getColor(), _player1.getColor())){
 					System.out.println(_player2.getColor() + ", you are checked.");
-				else
+				}
+				else {
 					System.out.println(_player2.getColor() + ", your turn.");
+				}
 				_player2.movePiece(_board);
-			_turn--;
-			updateGUI();
+				_turn--;
+				updateGUI();
 			}
-<<<<<<< HEAD
-=======
-			System.out.println("Board after move:\n" + _board);
-			turns++;
->>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
 		}
 
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))

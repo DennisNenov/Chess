@@ -83,7 +83,7 @@ public class Human extends Player {
 			_selectionStage = 2;
 			System.out.println(_selectionStage);
 			System.out.println("selection stage is now 2");
-			board.executeMove(move);
+			board.executeMove(move, _opponent);
 		}
 		else {
 			feedback(move, board);
@@ -107,7 +107,7 @@ public class Human extends Player {
 	public void selectMoveKeyboard(Board board) {
 		int[] move = createMove(_coordinatesSelected, inputCoordinates());
 		if (board.isValidMove(move)) {
-			board.executeMove(move);
+			board.executeMove(move, _opponent);
 			resetCS();
 			_selectionStage = 2;
 		}
