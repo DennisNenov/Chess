@@ -144,8 +144,8 @@ public class Human extends Player {
 			System.out.println("to move first select one of your pieces!\n");
 		}
 		else {
-			System.out.println("Error: invalid choice - this isn't your piece!\n");
-			System.out.println(_color + ",please choose one of your own pieces.");
+			System.out.println("Error: invalid choice - this piece can't be moved by you!\n");
+			System.out.println(_color + ",please choose  another piece.");
 		}
 	}
 

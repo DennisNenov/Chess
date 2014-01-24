@@ -203,12 +203,12 @@ public class Chess implements ActionListener {
 
 	// after piece is selected the user can see potential moves
 	public void updateGUI(Human player) {
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
+		for (int x = 0; x <= 7; x++) {
+			for (int y = 0; y < 7; y++) {
 				if (_board.getScope(player.getCoordinatesSelected()[0],
 						    player.getCoordinatesSelected()[1])[x][y]) {
 					_buttonBoard[x][y].setBackground(Color.yellow);
-					if (_board.getPieceColor(x,y) != player.getColor()) {
+					if ((!_board.isEmpty(x,y) && (!_board.getPieceColor(x,y).equals(player.getColor())))) {
 						_buttonBoard[x][y].setBackground(Color.magenta);
 					}
 				}
