@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Castling
 {
 
-	public static boolean canCastle (Board board, String color, int side)
+	private static boolean canCastle (Board board, String color, int side)
 	{
 
 		if (board.isChecked(color, board.flipColor(color)))
