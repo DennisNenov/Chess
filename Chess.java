@@ -101,8 +101,6 @@ public class Chess implements ActionListener {
 				_player2.movePiece(_board);
 			}
 			System.out.println("Board after move:\n" + _board);
-			System.out.println("Testing: checkEvent()");
-			System.out.println(Board.printer(Castling.eventCheck(_board), 1));
 			turns++;
 		}
 

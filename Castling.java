@@ -49,13 +49,11 @@ public class Castling
 
 		if ( (board.isEmpty(rowToCheck, rookCol)) || (!((board.getPiece(rowToCheck, rookCol) instanceof Rook)) || (board.getPiece(rowToCheck, rookCol).getCounter() > 0)))
 		{
-			System.out.println("Rook check failed");
 			return false;
 		}
 
 		if ( (board.isEmpty(rowToCheck, 4)) || (!((board.getPiece(rowToCheck, 4) instanceof King)) || (board.getPiece(rowToCheck, 4).getCounter() > 0)))
 		{
-			System.out.println("King check failed");
 			return false;
 		}
 
@@ -65,7 +63,6 @@ public class Castling
 		{
 			if ((!(board.isEmpty(rowToCheck, colToCheck.get(i)))) || enemyScope[rowToCheck][colToCheck.get(i)])
 			{
-				System.out.println("Enemy move or not empty test check failed");
 				return false;
 			}
 		}
@@ -79,7 +76,6 @@ public class Castling
 
 		if(newBoard.isChecked(color, newBoard.flipColor(color)))
 		{
-			System.out.println("Checkmate failed");
 			return false;
 		}
 		return true;
