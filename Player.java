@@ -11,6 +11,7 @@ public abstract class Player {
 	// instance variables
 	protected String _color;
 	protected int moveCounter;
+	protected Player _opponent;
 
 	// default constructor
 	public Player(String color) {
@@ -35,6 +36,12 @@ public abstract class Player {
 	public boolean getDraw()
 	{
 		return moveCounter >= 50;
+	}
+
+	// mutator methods
+
+	public void setOpponent(Player opponent) {
+		_opponent = opponent;
 	}
 
 	// createMove helper method

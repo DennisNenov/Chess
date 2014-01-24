@@ -36,22 +36,6 @@ public class Board
 		for (int x = 0; x < 8; x++) {
 			_board[1][x] = new Pawn(color1, color1, color2, genSnapshot(1,x), 1, x);
 		}
-
-		
-		//_board[2][4] = new Rook(color1, color1, color2);
-		//_board[4][6] = new Bishop(color2, color1, color2);
-		//_board[3][4] = new Rook(color1, color1, color2);
-		//_board[5][6] = new Bishop(color2, color1, color2);
-		//_board[4][4] = new Queen(color1, color1, color2);
-		//_board[2][2] = new King(color2, color1, color2);
-		//_board[5][5] = new Pawn(color2, color1, color2);
-		
-		//check test
-		//_board[3][2] = new King(color2, color1, color2);
-
-		
-
-
 		
 		// instantiates the back row of pieces with the color specified in color2
 		_board[7][0] = new Rook(color2, color1, color2, genSnapshot(7,0), 7, 0);
@@ -67,15 +51,6 @@ public class Board
 		for (int x = 0; x < 8; x++) {
 			_board[6][x] = new Pawn(color2, color1, color2, genSnapshot(6,x), 6, x);
 		}
-	
-		//test for checkmate
-		/*
-		_board[3][3] = new King(color1, color1, color2);
-		_board[2][3] = new Queen(color2, color1, color2);
-		_board[4][3] = new Queen(color2, color1, color2);
-		_board[3][4] = new Queen(color2, color1, color2);
-		_board[3][2] = new Queen(color2, color1, color2);
-		*/
 	}
 
 	// methods
