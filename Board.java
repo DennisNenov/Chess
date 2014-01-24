@@ -530,7 +530,7 @@ public class Board
 	public boolean isTied(Player player1, Player player2)
 	{
 		int[] numPieces = getNumPieces();
-		System.out.println(numPieces[0] + " and for color 2 " + numPieces[1]);
+		//System.out.println(numPieces[0] + " and for color 2 " + numPieces[1]);
 		return (player1.getDraw() || player2.getDraw() || (numPieces[0] == 1 && numPieces[1] == 1));
 	}
 
