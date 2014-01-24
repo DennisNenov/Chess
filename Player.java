@@ -38,6 +38,8 @@ public abstract class Player {
 		return moveCounter >= 50;
 	}
 
+	public abstract boolean checkForCastle (String color, Board board);
+
 	// mutator methods
 
 	public void setOpponent(Player opponent) {

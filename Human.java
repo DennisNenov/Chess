@@ -147,6 +147,47 @@ public class Human extends Player {
 			System.out.println("Error: invalid choice - this isn't your piece!\n");
 			System.out.println(_color + ",please choose one of your own pieces.");
 		}
+	}
+
+	public boolean checkForCastle (String color, Board _board) {
+		ArrayList<Object[]> codes = Castling.eventCheck(_board);
+		for (int i = 0; i < codes.size(); i++) {
+			if (!(codes.get(i)[0].equals(color))) {
+				codes.remove(i);
+			}
+		}
+		if (codes.size() == 1) {
+			String side = "";
+			if (codes.get(0)[1] == 0) {
+				side = "kingside";
+			}
+			if (codes.get(0)[1] == 1) {
+				side = "queenside";
+			}
+			System.out.println("You have the option of castling " + side + ", would you like to do so?");
+			System.out.println("Press 0 for yes, and 1 for no.");
+			int input = Keyboard.readInt();
+			if (input == 0) {
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		else if (codes.size() == 2) {
+
+			System.out.println("You have the option of castling on either side, would you like to do so?");
+			System.out.println("Press 0 for kingside, 1 for queenside, and 2 for no.");
+			int input = Keyboard.readInt();
+			if (input == 0 || input == 1) {
+				for (int i = 0; i < codes.size(); i++) {
+					if (!(codes.get(i)[1] == input)) {
+						codes.remove(i);
+					}
+				}
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		return false;
 	}		
 
 	// helper method for reseting _coordinatesSelected instance

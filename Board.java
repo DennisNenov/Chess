@@ -152,9 +152,22 @@ public class Board
 	public boolean isValidPiece(int[] coordinates, String color) {
 		int x = coordinates[0];
 		int y = coordinates[1];
-		return ((isOut(x,y) == false) &&
-		        (isEmpty(x,y) == false) &&
-		        (getPieceColor(x,y) == color));
+		if ((isOut(x,y)) || (isEmpty(x,y)) || (!(getPieceColor(x,y) == color)))
+		{
+			return false;
+		}
+		boolean[][] pieceScope = getScope(x,y);
+		for (int r = 0; r < pieceScope.length; r++)
+		{
+			for (int c = 0; c < pieceScope.length; c++)
+			{
+				if (pieceScope[r][c] == true)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean isValidMove(int[] move) {

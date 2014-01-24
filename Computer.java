@@ -74,6 +74,43 @@ public class Computer extends Player {
 		return moves;
 	}
 
+	public boolean checkForCastle (String color, Board _board) {
+		ArrayList<Object[]> codes = Castling.eventCheck(_board);
+		for (int i = 0; i < codes.size(); i++) {
+			if (!(codes.get(i)[0].equals(color))) {
+				codes.remove(i);
+			}
+		}
+		if (codes.size() == 1) {
+			String side = "";
+			if (codes.get(0)[1] == 0) {
+				side = "kingside";
+			}
+			if (codes.get(0)[1] == 1) {
+				side = "queenside";
+			}
+			int input = (int) (Math.random() * 1);
+			if (input == 0) {
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		else if (codes.size() == 2) {
+
+			int input = (int) (Math.random() * 1);
+			if (input == 0 || input == 1) {
+				for (int i = 0; i < codes.size(); i++) {
+					if (!(codes.get(i)[1] == input)) {
+						codes.remove(i);
+					}
+				}
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void selectMove(ArrayList<int[]> moves,Board board) {
 		ArrayList<int[]> newMoves = filterMoves(moves, board);
 		if (newMoves.size() > 0)
