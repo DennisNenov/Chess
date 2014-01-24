@@ -116,8 +116,7 @@ public class Chess implements ActionListener {
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor());
 		System.out.println(_board);
-		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
-		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
+		while (gameToRun()) {
 			if (_turn == 1) {
 				if (_board.isChecked(_player1.getColor(), _player2.getColor())){
 					System.out.println("\n" + _player1.getColor() + ", you are checked. Your turn.");
