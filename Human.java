@@ -21,6 +21,7 @@ public class Human extends Player {
 	public Human(String color) {
 		super(color);
 		_selectionStage = 2;
+		resetCS();
 	}
 
 	// methods

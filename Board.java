@@ -176,10 +176,22 @@ public class Board
 		int x2 = move[2];
 		int y2 = move[3];
 		if (!(getScope(x1,y1)[x2][y2])) {
-			System.out.println("Error: invalid choice - please try again.");
+			System.out.println("Error: invalid choice (you cannot move this piece like that) - please try again.");
 			System.out.println();
 			System.out.println("Here, this board displays your options:");
 			System.out.println(printer(getScope(x1,y1)));
+			return false;
+		}
+		if (projectCheck(x1,y1,x2,y2,getPieceColor(x1,y1)))
+		{
+			System.out.println("Error: invalid choice (you cannot check yourself) - please try again.");
+			System.out.println();
+			return false;
+		}
+		if (getPiece(x2,y2) instanceof King)
+		{
+			System.out.println("Error: invalid choice (you cannot capture a king) - please try again.");
+			System.out.println();
 			return false;
 		}
 		return true;
@@ -497,9 +509,28 @@ public class Board
 
 	}
 
+	public int[] getNumPieces ()
+	{
+		int[] numPieces = new int[2];
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if ((!isEmpty(x,y)) && (getPieceColor(x, y).equals(_color1))) 
+				{
+					numPieces[0]++;
+				}
+				else if ((!isEmpty(x,y)) && (getPieceColor(x, y).equals(_color2)))
+				{
+					numPieces[1]++;
+				}
+			}
+		}
+		return numPieces;
+	}
+
 	public boolean isTied(Player player1, Player player2)
 	{
-		return (player1.getDraw() || player2.getDraw());
+		int[] numPieces = getNumPieces();
+		return (player1.getDraw() || player2.getDraw() || (numPieces[0] == 1 && numPieces[1] == 1));
 	}
 
 	// check and checkmate functions, we check to see if color1 is checked
