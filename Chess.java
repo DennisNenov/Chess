@@ -24,7 +24,7 @@ public class Chess implements ActionListener {
 
 	// default constructor
 	public Chess() {
-		System.out.println("\nChess by Nicholas Romanoff & Dennis Nennov\n");
+		System.out.println("\nChess by Nicholas Romanoff & Dennis Nenov\n");
 		System.out.println("\nSelect from the game modes:");
 		System.out.println("\n1 - Human vs. Human");
 		System.out.println("2 - Human vs. Computer");
@@ -106,22 +106,37 @@ public class Chess implements ActionListener {
 		return _board;
 	}
 
+	public boolean gameToRun()
+	{
+		return (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || (_board.isCheckMated(_player2.getColor(), _player1.getColor())) || (_board.isTied(_player1, _player2))));
+	}
 	// turns
 	public void run() {
 		System.out.println("\nlowercase: " + _player1.getColor());
 		System.out.println("uppercase: " + _player2.getColor() + "\n");
+<<<<<<< HEAD
 		System.out.println(_board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
 			if (_turn == 1) {
+=======
+		System.out.println("Board before move:\n" + _board);
+		while (gameToRun()) {
+			System.out.println("Board before move:\n" + _board);
+			if ((turns % 2) == 0) {
+>>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
 				if (_board.isChecked(_player1.getColor(), _player2.getColor()))
 					System.out.println(_player1.getColor() + ", you are checked. Your turn.");
 				else
 					System.out.println(_player1.getColor() + ", your turn.");
 				_player1.movePiece(_board);
+<<<<<<< HEAD
 				System.out.println(_board);
 			_turn++;
 			updateGUI();
+=======
+				
+>>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
 			}
 			if (_turn == 2) {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor()))
@@ -132,12 +147,19 @@ public class Chess implements ActionListener {
 			_turn--;
 			updateGUI();
 			}
+<<<<<<< HEAD
+=======
+			System.out.println("Board after move:\n" + _board);
+			turns++;
+>>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
 		}
 
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))
 			System.out.println(_player2.getColor() + ", you have won.");
 		else if ((_board.isCheckMated(_player2.getColor(), _player1.getColor())))
 			System.out.println(_player1.getColor() + ", you have won.");
+		else if ((_board.isTied(_player1, _player2)))
+			System.out.println(_player1.getColor() + " and " + _player2.getColor() + ", you have both tied.");
 	}
 
 

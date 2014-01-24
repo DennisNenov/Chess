@@ -10,7 +10,11 @@ public abstract class Player {
 
 	// instance variables
 	protected String _color;
+<<<<<<< HEAD
 	
+=======
+	protected int moveCounter;
+>>>>>>> 6905642b9fdf7ea1b2c3a712de13e16b7c4bb418
 
 	// default constructor
 	public Player(String color) {
@@ -20,6 +24,21 @@ public abstract class Player {
 	// accessor methods
 	public String getColor() {
 		return _color;
+	}
+
+	public void resetCounter()
+	{
+		moveCounter = 0;
+	}
+
+	public void increaseCounter()
+	{
+		moveCounter++;
+	}
+
+	public boolean getDraw()
+	{
+		return moveCounter >= 50;
 	}
 
 	// createMove helper method
