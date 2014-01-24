@@ -10,6 +10,7 @@ public abstract class Player {
 
 	// instance variables
 	protected String _color;
+	
 
 	// default constructor
 	public Player(String color) {
