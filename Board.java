@@ -11,7 +11,6 @@ public class Board
 	// instance variables
 	private Piece[][] _board;
 	private String _color1, _color2;
-	private int moveCounter;
 
 
 	// default constructor
