@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.JComponent;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Chess implements ActionListener {
 
@@ -109,6 +110,59 @@ public class Chess implements ActionListener {
 		return (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || (_board.isCheckMated(_player2.getColor(), _player1.getColor())) || (_board.isTied(_player1, _player2))));
 	}
 
+
+	public boolean checkForCastle (String color)
+	{
+		ArrayList<Object[]> codes = Castling.eventCheck(_board);
+		for (int i = 0; i < codes.size(); i++)
+		{
+			if (!(codes.get(i)[0].equals(color)))
+			{
+				codes.remove(i);
+			}
+
+		}
+		if (codes.size() == 1)
+		{
+			String side = "";
+			if (codes.get(0)[1] == 0)
+			{
+				side = "kingside";
+			}
+			if (codes.get(0)[1] == 1)
+			{
+				side = "queenside";
+			}
+			System.out.println("You have the option of castling " + side + ", would you like to do so?");
+			System.out.println("Press 0 for yes, and 1 for no.");
+			int input = Keyboard.readInt();
+			if (input == 0)
+			{
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		else if (codes.size() == 2)
+		{
+			System.out.println("You have the option of castling on either side, would you like to do so?");
+			System.out.println("Press 0 for kingside, 1 for queenside, and 2 for no.");
+			int input = Keyboard.readInt();
+			if (input == 0 || input == 1)
+			{
+				for (int i = 0; i < codes.size(); i++)
+				{
+					if (!(codes.get(i)[1] == input))
+					{
+						codes.remove(i);
+					}
+				}
+				Castling.eventExecute(codes, _board);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// turns
 	public void run() {
 		System.out.println("\nlowercase: " + _player1.getColor());
@@ -123,7 +177,10 @@ public class Chess implements ActionListener {
 				else {
 					System.out.println("\n" + _player1.getColor() + ", your turn.\n");
 				}
-				_player1.movePiece(_board);
+				if (!checkForCastle(_player1.getColor()))
+				{
+					_player1.movePiece(_board);
+				}
 				System.out.println(_board);
 				_turn++;
 				updateGUI();
@@ -135,7 +192,10 @@ public class Chess implements ActionListener {
 				else {
 					System.out.println("\n" + _player2.getColor() + ", your turn.");
 				}
-				_player2.movePiece(_board);
+				if (!checkForCastle(_player2.getColor()))
+				{
+					_player2.movePiece(_board);
+				}
 				_turn--;
 				updateGUI();
 			}
