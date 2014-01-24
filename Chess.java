@@ -179,10 +179,10 @@ public class Chess implements ActionListener {
 				if (_board.isEmpty(x,y) == true) {
 					_buttonBoard[x][y].setBackground(Color.darkGray);			
 				}
-				else if (_board.getPieceColor(x,y) == _player1.getColor()) {
+				else if (_board.getPieceColor(x,y).equals(_player1.getColor())) {
 					_buttonBoard[x][y].setBackground(Color.red);
 				}
-				else if (_board.getPieceColor(x,y) == _player2.getColor()) {
+				else if (_board.getPieceColor(x,y).equals(_player2.getColor())) {
 					_buttonBoard[x][y].setBackground(Color.blue);
 				}
 			}
@@ -224,10 +224,10 @@ public class Chess implements ActionListener {
 				if (_board.isEmpty(x,y)) {
 					_buttonBoard[x][y].setBackground(Color.darkGray);			
 				}
-				else if (_board.getPieceColor(x,y) == _player1.getColor()) {
+				else if (_board.getPieceColor(x,y).equals(_player1.getColor())) {
 					_buttonBoard[x][y].setBackground(Color.red);
 				}
-				else if (_board.getPieceColor(x,y) == _player2.getColor()) {
+				else if (_board.getPieceColor(x,y).equals(_player2.getColor())) {
 					_buttonBoard[x][y].setBackground(Color.blue);
 				}
 			}
