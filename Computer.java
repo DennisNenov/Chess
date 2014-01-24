@@ -51,12 +51,10 @@ public class Computer extends Player {
 			int x2 = moves.get(i)[2];
 			int y2 = moves.get(i)[3];
 
-			Board newBoard = Board.copyBoard(board);
-			newBoard.setXY(x2,y2, newBoard.getPiece(x1,y1));
-			newBoard.setXY(x1,y1, null);
+			
 			//System.out.println("x1: " + x1 + "y1: " + y1 + "x2: " + x2 + "y2: " + y2);
 			//System.out.println("\n\nThe Computer Check Board: " + newBoard + "\n\n");
-			if (newBoard.isChecked(_color, newBoard.flipColor(_color)))
+			if (board.projectCheck(x1, x2, y1, y2, _color))
 			{
 				removalcount++;
 				try { 

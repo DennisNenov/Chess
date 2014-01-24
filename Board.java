@@ -116,6 +116,16 @@ public class Board
 		return newBoard;
 	}
 
+	public String getColor1()
+	{
+		return _color1;
+	}
+
+	public String getColor2()
+	{
+		return _color2;
+	}
+
 	public boolean isOut (int row, int column)
 	{
 		return (row > 7 || row < 0 || column > 7 || column < 0);
@@ -202,11 +212,25 @@ public class Board
 		{
 			player.increaseCounter();
 		}
+
+		if ((getPiece(x1,y1)) instanceof Piece)
+		{
+			getPiece(x1,y1).increaseCounter();
+		}
 		_board[x2][y2] = getPiece(x1,y1);
 		_board[x1][y1] = null;
 	}
 
 	// -----------------------------------------------------------------------
+
+
+	public boolean projectCheck(int x1, int y1, int x2, int y2, String color)
+	{
+		Board newBoard = copyBoard(this);
+		newBoard.setXY(x2,y2, newBoard.getPiece(x1,y1));
+		newBoard.setXY(x1,y1, null);
+		return newBoard.isChecked(color, newBoard.flipColor(color));
+	}
 
 	//generates 3 by 3 snapshot of the area around the piece
 	public String[][] genSnapshot(int row, int column)
