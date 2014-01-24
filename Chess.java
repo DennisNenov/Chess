@@ -162,12 +162,14 @@ public class Chess implements ActionListener {
 		_grid.setVgap(1);
 		_grid.setHgap(2);
 		_panel = new JPanel(_grid);
+		_panel.setBackground(Color.darkGray);
 
 		_buttonBoard = new JButton[8][8];
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				_buttonBoard[x][y] = new JButton(_board.getPieceString(x,y));
 				_buttonBoard[x][y].addActionListener(this);
+				_buttonBoard[x][y].setBackground(new Color (3, 59, 90));
 				if (_board.isEmpty(x,y) == true) {
 					_buttonBoard[x][y].setBackground(Color.lightGray);			
 				}
@@ -179,7 +181,6 @@ public class Chess implements ActionListener {
 				}
 			}
 		}		
-
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -198,8 +199,9 @@ public class Chess implements ActionListener {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {	
 				_buttonBoard[x][y].setText(_board.getPieceString(x,y));	
+				_buttonBoard[x][y].setBackground(Color.green);	
 				if (_board.isEmpty(x,y)) {
-					_buttonBoard[x][y].setBackground(Color.red);			
+					_buttonBoard[x][y].setBackground(Color.pink);			
 				}
 				else if (_board.getPieceColor(x,y) == _player1.getColor()) {
 					_buttonBoard[x][y].setBackground(Color.red);
@@ -209,6 +211,7 @@ public class Chess implements ActionListener {
 				}
 			}
 		}
+		_buttonBoard[3][4].setBackground(Color.yellow);
 	}
 
 	// listener method for the 2d array of buttons
