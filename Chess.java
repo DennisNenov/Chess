@@ -183,7 +183,7 @@ public class Chess implements ActionListener {
 				}
 				System.out.println(_board);
 				_turn++;
-				updateGUI();
+				updateGUI2();
 			}
 			if (_turn == 2) {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor())){
@@ -197,7 +197,7 @@ public class Chess implements ActionListener {
 					_player2.movePiece(_board);
 				}
 				_turn--;
-				updateGUI();
+				updateGUI2();
 			}
 			System.out.println("Board after move:\n" + _board);
 			Promotion.eventExecute(Promotion.eventCheck(_board), _board);
@@ -231,7 +231,7 @@ public class Chess implements ActionListener {
 				_buttonBoard[x][y].addActionListener(this);
 				_buttonBoard[x][y].setBackground(new Color (3, 59, 90));
 				if (_board.isEmpty(x,y) == true) {
-					_buttonBoard[x][y].setBackground(Color.lightGray);			
+					_buttonBoard[x][y].setBackground(Color.darkGray);			
 				}
 				else if (_board.getPieceColor(x,y) == _player1.getColor()) {
 					_buttonBoard[x][y].setBackground(Color.red);
@@ -255,13 +255,30 @@ public class Chess implements ActionListener {
 		_frame.setVisible(true);
 	}
 
-	public void updateGUI() {
+	// after piece is selected the user can see potential moves
+	public void updateGUI(Human player) {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if (_board.getScope(player.getCoordinatesSelected()[0],
+						    player.getCoordinatesSelected()[1])[x][y]) {
+					if (_board.getPieceColor(x,y) != player.getColor()) {
+						_buttonBoard[x][y].setBackground(Color.magenta);
+					}
+					else {
+						_buttonBoard[x][y].setBackground(Color.yellow);
+					}
+				}
+			}
+		}
+	}						
+		
+
+	public void updateGUI2() {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {	
 				_buttonBoard[x][y].setText(_board.getPieceString(x,y));	
-				_buttonBoard[x][y].setBackground(Color.green);	
 				if (_board.isEmpty(x,y)) {
-					_buttonBoard[x][y].setBackground(Color.pink);			
+					_buttonBoard[x][y].setBackground(Color.darkGray);			
 				}
 				else if (_board.getPieceColor(x,y) == _player1.getColor()) {
 					_buttonBoard[x][y].setBackground(Color.red);
@@ -271,7 +288,6 @@ public class Chess implements ActionListener {
 				}
 			}
 		}
-		_buttonBoard[3][4].setBackground(Color.yellow);
 	}
 
 	// listener method for the 2d array of buttons
@@ -281,7 +297,7 @@ public class Chess implements ActionListener {
 				for (int y = 0; y < 8; y++) {
 					if (event.getSource() == _buttonBoard[x][y]) {
 						applyActionInfo(x,y);
-						updateGUI();
+						updateGUI2();
 					}
 				}	
 			}
@@ -295,6 +311,7 @@ public class Chess implements ActionListener {
 				System.out.println("x = " + x);
 				System.out.println("y = " + y);
 				((Human)_player1).selectPieceGUI(x, y, _board);
+				updateGUI((Human)_player1);
 			}
 			else if (((Human)_player1).getSelectionStage() == 1) {
 				System.out.println("x =  " + x);
@@ -307,6 +324,7 @@ public class Chess implements ActionListener {
 				System.out.println("x = " + x);
 				System.out.println("y = " + y);
 				((Human)_player2).selectPieceGUI(x, y, _board);
+				updateGUI((Human)_player2);
 			}
 			else if (((Human)_player2).getSelectionStage() == 1) {
 				System.out.println("x =  " + x);
