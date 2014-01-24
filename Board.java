@@ -53,8 +53,9 @@ public class Board
 		}
 	}
 
-	// methods
-	//checks if the pair is out of bounds
+	// Helper Functions
+
+	//Mutator method that changes the board
 	public void setXY (int x, int y, Object value)
 	{
 		if (value == null)
@@ -68,6 +69,7 @@ public class Board
 		 
 	}
 
+	//Method that provides for a deep-copy
 	public static Board copyBoard( Board toCopy)
 	{
 		Board newBoard = new Board(toCopy._color1, toCopy._color2);
@@ -91,6 +93,7 @@ public class Board
 		return newBoard;
 	}
 
+	//accessor methods that give the colors of the two teams
 	public String getColor1()
 	{
 		return _color1;
@@ -101,17 +104,20 @@ public class Board
 		return _color2;
 	}
 
+	//method that checks if the specified row and column number are out of bounds
 	public boolean isOut (int row, int column)
 	{
 		return (row > 7 || row < 0 || column > 7 || column < 0);
 
 	}
 
+	///method that returns whether the specified row and column are empty
 	public boolean isEmpty(int row, int column) 
 	{
 			return (_board[row][column] == null);
 	}
 
+	//method that 
 	public Piece getPiece(int row, int column) {
 		return _board[row][column];
 	}
@@ -198,7 +204,7 @@ public class Board
 
 	// -----------------------------------------------------------------------
 
-
+	//creates a new board to see whether the specified move would produce a check
 	public boolean projectCheck(int x1, int y1, int x2, int y2, String color)
 	{
 		Board newBoard = copyBoard(this);
@@ -239,6 +245,7 @@ public class Board
 
 	}
 
+	//obtains the scope of a piece i.e. the range of values that
 	public boolean[][] getScope(int row, int column) 
 	{
 		boolean[][] scopePossible = new boolean[8][8];
@@ -319,7 +326,7 @@ public class Board
 		return scopePossible;
 	}
 
-
+	//function that returns the coordinates of all the pieces that can move to another piece
 	public ArrayList<Integer[]> getAllWhoReach (int row, int column)
 	{
 		ArrayList<Integer[]> reachList = new ArrayList<Integer[]>();
@@ -349,7 +356,9 @@ public class Board
 		return colorScope;
 	}
 
-	public boolean[][] getColorScopeWithout(String color, int row, int column) {
+	//gets the scope of a color excluding a specified piece that has that same color
+	public boolean[][] getColorScopeWithout(String color, int row, int column) 
+	{
 		boolean[][] colorScope = new boolean[8][8];
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
@@ -395,6 +404,8 @@ public class Board
 		return cor;
 	}
 
+	
+	//determines whether a piece at row1, col1 can go to the piece at row2, col2 without being intercepted by another piece. useful for checkmate
 	public boolean isNotInterupt(int row1, int col1, int row2, int col2)
 	{
 
@@ -485,7 +496,7 @@ public class Board
 		//System.out.println(printer(getAllWhoReach(corking[0], corking[1])));
 		return getColorScope(color2)[corking[0]][corking[1]];
 	}
-
+	//determines if it's impossibleto move for the king
 	public boolean isImpossibleToMove (String color1, String color2)
 	{
 		int[] corking = getKingCor(color1);

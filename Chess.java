@@ -143,14 +143,8 @@ public class Chess implements ActionListener {
 				_turn--;
 				updateGUI();
 			}
-<<<<<<< HEAD
 			System.out.println("Board after move:\n" + _board);
-			System.out.println("Testing pawn promotion: ");
-			System.out.println(Board.printer(Promotion.eventCheck(_board), 1));
 			Promotion.eventExecute(Promotion.eventCheck(_board), _board);
-			turns++;
-=======
->>>>>>> cafd224e3d05f33ab6834e100c412b7fd79e5993
 		}
 
 		if ((_board.isCheckMated(_player1.getColor(), _player2.getColor())))

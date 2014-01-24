@@ -57,6 +57,7 @@ public class Computer extends Player {
 			if (board.projectCheck(x1, x2, y1, y2, _color))
 			{
 				removalcount++;
+				/*
 				try { 
 					System.out.println("pot check removed: " + "(" + x1 + "," + y1 + ") to" + "(" + x2 + "," + y2 + ")");
 					Thread.sleep(2); 
@@ -66,6 +67,7 @@ public class Computer extends Player {
 					} 
 				
 				//System.out.println(newBoard);
+				*/
 				moves.remove(i);
 			} 
 		}
