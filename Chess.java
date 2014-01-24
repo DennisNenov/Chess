@@ -25,6 +25,7 @@ public class Chess implements ActionListener {
 	// default constructor
 	public Chess() {
 		System.out.println("\nChess by Nicholas Romanoff & Dennis Nenov\n");
+		System.out.println("AP CS1 Final Project");
 		System.out.println("\nSelect from the game modes:");
 		System.out.println("\n1 - Human vs. Human");
 		System.out.println("2 - Human vs. Computer");
@@ -35,35 +36,29 @@ public class Chess implements ActionListener {
 			int mode = Keyboard.readInt();
 			temp = mode;
 			if (mode == 1) {
-				System.out.println("\nPlayer One");
-				System.out.println("choose your team color: ");
+				System.out.println("\nPlayer One: ");
+				System.out.print("Please type in your name: ");
 				String color = Keyboard.readString();
 				_player1 = new Human(color);
-				System.out.println("\nPlayer Two");
-				System.out.println("choose your team color: ");
+				System.out.println("\nPlayer Two: ");
+				System.out.print("Please type in your name: ");
 				color = Keyboard.readString();
 				_player2 = new Human(color);
 				break;
 			}
 			else if (mode == 2) {
-				System.out.println("\nPlayer One");
-				System.out.println("choose your team color: ");
+				System.out.println("\nPlayer One: ");
+				System.out.print("Please type in your name: ");
 				String color = Keyboard.readString();
 				_player1 = new Human(color);
-				System.out.println("\nPlayer Two: Red");
-				if (_player1.getColor() == "Red") {
-					_player2 = new Computer("Blue");
-				}
-				else {
-					_player2 = new Computer("Red");
-				}
+				_player2 = new Computer("Computer");
 				break;
 			}
 			else if (mode == 3) {
-				System.out.println("\nPlayer One: Red");
-				_player1 = new Computer("Red");
-				System.out.println("\nPlayer Two: Blue");
-				_player2 = new Computer("Blue");
+				System.out.println("\nPlayer One:");
+				_player1 = new Computer("Computer A");
+				System.out.println("\nPlayer Two:");
+				_player2 = new Computer("Computer B");
 				break;
 			}
 			else {
@@ -77,6 +72,7 @@ public class Chess implements ActionListener {
 			System.out.println("\nSelect a method of gameplay:");
 			System.out.println("\n1 - Mouse: clicking in graphic window");
 			System.out.println("2 - Keyboard: typing in coordinates");
+			System.out.println("\nMethod number: ");
 			int mode = Keyboard.readInt();
 			if (mode == 1) {
 				_isGUI = true;
@@ -116,16 +112,16 @@ public class Chess implements ActionListener {
 	// turns
 	public void run() {
 		System.out.println("\nlowercase: " + _player1.getColor());
-		System.out.println("uppercase: " + _player2.getColor() + "\n");
+		System.out.println("uppercase: " + _player2.getColor());
 		System.out.println(_board);
 		while (! ((_board.isCheckMated(_player1.getColor(), _player2.getColor())) || 
 		         (_board.isCheckMated(_player2.getColor(), _player1.getColor())))) {
 			if (_turn == 1) {
 				if (_board.isChecked(_player1.getColor(), _player2.getColor())){
-					System.out.println(_player1.getColor() + ", you are checked. Your turn.");
+					System.out.println("\n" + _player1.getColor() + ", you are checked. Your turn.");
 				}
 				else {
-					System.out.println(_player1.getColor() + ", your turn.");
+					System.out.println("\n" + _player1.getColor() + ", your turn.\n");
 				}
 				_player1.movePiece(_board);
 				System.out.println(_board);
@@ -134,10 +130,10 @@ public class Chess implements ActionListener {
 			}
 			if (_turn == 2) {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor())){
-					System.out.println(_player2.getColor() + ", you are checked.");
+					System.out.println("\n" + _player2.getColor() + ", you are checked.");
 				}
 				else {
-					System.out.println(_player2.getColor() + ", your turn.");
+					System.out.println("\n" + _player2.getColor() + ", your turn.");
 				}
 				_player2.movePiece(_board);
 				_turn--;
@@ -233,7 +229,7 @@ public class Chess implements ActionListener {
 	public void applyActionInfo(int x, int y) {
 		if (_turn == 1) {
 			if (((Human)_player1).getSelectionStage() == 0) {
-				System.out.print(x + "\n");
+				System.out.println("x = " + x);
 				System.out.println("y = " + y);
 				((Human)_player1).selectPieceGUI(x, y, _board);
 			}
@@ -245,7 +241,7 @@ public class Chess implements ActionListener {
 		}
 		else {
 			if (((Human)_player2).getSelectionStage() == 0) {
-				System.out.print(x + "\n");
+				System.out.println("x = " + x);
 				System.out.println("y = " + y);
 				((Human)_player2).selectPieceGUI(x, y, _board);
 			}

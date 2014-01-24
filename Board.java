@@ -610,7 +610,7 @@ public class Board
 	}
 
 	public String toString() {
-		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
+		String retStr = "\n    0 1 2 3 4 5 6 7 X" + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
 			String retRow = x + " | ";
 			for (int y = 0; y < 8; y++) {
@@ -623,7 +623,7 @@ public class Board
 			}
 			retStr += "\n" + retRow + "|";
 		}
-		retStr += "\n   ----------------- \n";
+		retStr += "\nY  ----------------- \n";
 		return retStr;
     	}
 
