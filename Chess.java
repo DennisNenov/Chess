@@ -91,7 +91,7 @@ public class Chess implements ActionListener {
 				else
 					System.out.println(_player1.getColor() + ", your turn.");
 				_player1.movePiece(_board);
-				System.out.println("Board after move:\n" + _board);
+				
 			}
 			else {
 				if (_board.isChecked(_player2.getColor(), _player1.getColor()))
@@ -100,6 +100,9 @@ public class Chess implements ActionListener {
 					System.out.println(_player2.getColor() + ", your turn.");
 				_player2.movePiece(_board);
 			}
+			System.out.println("Board after move:\n" + _board);
+			System.out.println("Testing: checkEvent()");
+			System.out.println(Board.printer(Castling.eventCheck(_board), 1));
 			turns++;
 		}
 

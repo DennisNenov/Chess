@@ -613,6 +613,16 @@ public class Board
 		return returnString;
 	}
 
+	public static String printer (ArrayList<Object[]> arrayToPrint, int n)
+	{
+		String returnString = "";
+		for (int i = 0; i < arrayToPrint.size(); i++)
+		{
+			returnString += "Pair " + (i + 1) + ": " + "(" + arrayToPrint.get(i)[0] + " , " + arrayToPrint.get(i)[1] + ")\n";
+		}
+		return returnString;
+	}
+
 	public String toString() {
 		String retStr = "\n    0 1 2 3 4 5 6 7  " + "\n   ----------------- ";
        		for (int x = 0; x < 8; x++) {
@@ -685,7 +695,7 @@ public class Board
 		System.out.println("Testing: isNotInterupt() - (4,6) to (2,4)");
 		System.out.println(test.isNotInterupt(4, 6, 2, 4));
 
-		
+		/*
 		System.out.println("Testing: getAllWhoReach() - (2,4)");
 		System.out.println(printer(test.getAllWhoReach(2, 4)));
 
@@ -697,6 +707,10 @@ public class Board
 
 		System.out.println("Testing: getAllWhoReach() - (1,2)");
 		System.out.println(printer(test.getAllWhoReach(1, 2)));
+		*/
+
+		System.out.println("Testing: checkEvent()");
+		System.out.println(printer(Castling.eventCheck(test), 1));
 
 
     }
